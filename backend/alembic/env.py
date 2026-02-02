@@ -12,7 +12,7 @@ from app.core.config import get_settings
 from app.infrastructure.database import Base
 
 # Import all models here to ensure they are registered with Base.metadata
-# from app.domain.entities import Guest, Table, WaitlistEntry  # noqa: F401
+from app.domain.entities import Guest, Table, WaitlistEntry  # noqa: F401
 
 config = context.config
 
