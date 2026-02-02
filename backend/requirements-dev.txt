@@ -1,0 +1,11 @@
+# TapusAI Backend - Development Dependencies
+# Install with: pip install -r requirements-dev.txt
+
+-r requirements.txt
+
+pytest
+pytest-asyncio
+pytest-cov
+httpx
+ruff
+mypy

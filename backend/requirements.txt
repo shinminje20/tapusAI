@@ -1,0 +1,12 @@
+# TapusAI Backend - Production Dependencies
+# Install with: pip install -r requirements.txt
+
+fastapi
+uvicorn[standard]
+sqlalchemy[asyncio]
+alembic
+pydantic
+pydantic-settings
+python-multipart
+aiosqlite
+asyncpg
