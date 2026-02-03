@@ -1,7 +1,7 @@
 # Session Context - Phase 2 Kiosk App Implementation
 
 **Last Updated:** 2026-02-02
-**Session Status:** IN PROGRESS - Tasks 2.1-2.5 Code Complete, npm install required
+**Session Status:** Tasks 2.1-2.6 Code Complete, npm install + git commit required
 
 ---
 
@@ -37,7 +37,7 @@ cd apps/kiosk && npx expo start
 
 ```
 apps/kiosk/
-├── App.tsx                 # Entry point with Redux Provider + SafeAreaProvider
+├── App.tsx                 # Entry point with Redux Provider + ErrorBoundary + StatusBar
 ├── index.ts                # Expo entry (registerRootComponent)
 ├── app.json                # Expo config (Tapus Kiosk, com.tapus.kiosk)
 ├── babel.config.js         # babel-preset-expo
@@ -49,6 +49,10 @@ apps/kiosk/
     ├── app/
     │   ├── store.ts        # Redux store with RTK Query middleware
     │   └── constants.ts    # API_URL, KIOSK_SOURCE, timeouts, validation limits
+    ├── components/
+    │   ├── ErrorBoundary.tsx   # Error boundary with reset (Task 2.6)
+    │   ├── LoadingOverlay.tsx  # Full-screen loading modal (Task 2.6)
+    │   └── index.ts
     ├── services/
     │   ├── api.ts          # RTK Query baseApi with fetchBaseQuery
     │   ├── waitlistApi.ts  # addGuest mutation, getEta query
@@ -59,7 +63,7 @@ apps/kiosk/
     └── features/registration/
         ├── screens/
         │   ├── WelcomeScreen.tsx      # Large "Join Waitlist" button
-        │   ├── RegistrationScreen.tsx # GuestForm + API submission
+        │   ├── RegistrationScreen.tsx # GuestForm + API + LoadingOverlay + error handling
         │   ├── ConfirmationScreen.tsx # Position + ETA + auto-reset (30s)
         │   └── index.ts
         ├── components/
@@ -216,13 +220,17 @@ All packages use `"latest"` tag (user requirement):
 | 2.3 | Validation Utilities | ✅ Code Complete (20 tests) |
 | 2.4 | UI Components | ✅ Code Complete |
 | 2.5 | Screens & Navigation | ✅ Code Complete (9 tests) |
-| 2.6 | Integration & Polish | ⏳ Pending |
+| 2.6 | Integration & Polish | ✅ Code Complete |
 
 ---
 
-## Remaining Work (Task 2.6)
+## Remaining Work
 
-1. **Verify Setup**
+1. **Git Commit (REQUIRED)**
+   - Run `git add .`
+   - Commit with message referencing REQ-DEV-001, REQ-WL-001, AC-WL-001, AC-WL-002, AC-WL-008
+
+2. **Verify Setup**
    - Run `npm install`
    - Run tests
    - Start Expo and test on simulator

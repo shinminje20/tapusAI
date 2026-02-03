@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../../navigation/KioskNavigator';
 import { GuestForm, GuestFormData } from '../components';
+import { LoadingOverlay } from '../../../components';
 import { useAddGuestMutation } from '../../../services/waitlistApi';
 
 type RegistrationScreenProps = {
@@ -16,6 +17,36 @@ type RegistrationScreenProps = {
  */
 export function RegistrationScreen({ navigation }: RegistrationScreenProps) {
   const [addGuest, { isLoading }] = useAddGuestMutation();
+
+  const getErrorMessage = (error: unknown): string => {
+    // Network error (no connection)
+    if (error && typeof error === 'object') {
+      if ('status' in error && error.status === 'FETCH_ERROR') {
+        return 'Unable to connect. Please check your internet connection and try again.';
+      }
+      // Timeout error
+      if ('status' in error && error.status === 'TIMEOUT_ERROR') {
+        return 'Request timed out. Please try again.';
+      }
+      // Server error with detail
+      if ('data' in error) {
+        const data = error as { data?: { detail?: string } };
+        if (data.data?.detail) {
+          return data.data.detail;
+        }
+      }
+      // HTTP status codes
+      if ('status' in error && typeof error.status === 'number') {
+        if (error.status >= 500) {
+          return 'Server error. Please try again in a moment.';
+        }
+        if (error.status === 409) {
+          return 'You may already be on the waitlist. Please check with staff.';
+        }
+      }
+    }
+    return 'Failed to join waitlist. Please try again.';
+  };
 
   const handleSubmit = async (data: GuestFormData) => {
     try {
@@ -33,13 +64,13 @@ export function RegistrationScreen({ navigation }: RegistrationScreenProps) {
         name: result.name,
       });
     } catch (error) {
-      // Handle API errors
-      const errorMessage =
-        error && typeof error === 'object' && 'data' in error
-          ? (error as { data?: { detail?: string } }).data?.detail || 'Failed to join waitlist'
-          : 'Failed to join waitlist. Please try again.';
-
-      Alert.alert('Error', errorMessage, [{ text: 'OK' }]);
+      const errorMessage = getErrorMessage(error);
+      Alert.alert(
+        'Unable to Join Waitlist',
+        errorMessage,
+        [{ text: 'OK', style: 'default' }],
+        { cancelable: true }
+      );
     }
   };
 
@@ -49,6 +80,7 @@ export function RegistrationScreen({ navigation }: RegistrationScreenProps) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <LoadingOverlay visible={isLoading} message="Joining waitlist..." />
       <KeyboardAvoidingView
         style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -73,6 +105,7 @@ export function RegistrationScreen({ navigation }: RegistrationScreenProps) {
               style={styles.backText}
               onPress={handleBack}
               accessibilityRole="button"
+              accessibilityLabel="Cancel and go back"
             >
               Cancel
             </Text>
