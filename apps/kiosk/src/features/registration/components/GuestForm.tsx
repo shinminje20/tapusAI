@@ -108,6 +108,7 @@ export function GuestForm({ onSubmit, isLoading = false }: GuestFormProps) {
       <PhoneInput
         value={phone}
         onChangeText={handlePhoneChange}
+        onBlur={() => handleBlur('phone')}
         error={touched.phone ? errors.phone : undefined}
       />
 

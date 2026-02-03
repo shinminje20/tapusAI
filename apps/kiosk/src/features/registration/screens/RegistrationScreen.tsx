@@ -61,7 +61,7 @@ export function RegistrationScreen({ navigation }: RegistrationScreenProps) {
         entryId: result.id,
         position: result.position,
         etaMinutes: result.eta_minutes,
-        name: result.name,
+        name: result.guest_name || data.name.trim(), // Use input name as fallback
       });
     } catch (error) {
       const errorMessage = getErrorMessage(error);

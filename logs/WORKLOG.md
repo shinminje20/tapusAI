@@ -135,3 +135,25 @@
   - BLOCKER: Shell environment issue - all bash commands returning exit code 1
   - Action Required: Run `npm install` manually to install dependencies
   - Next: Complete npm install, verify Expo starts, Task 2.6 integration
+
+02/02/2026: Completed Task 2.6 Integration & Polish + Code Review
+  - REQ/AC: REQ-WL-001, AC-WL-001, AC-WL-002, AC-WL-008, AC-DEV-002
+  - Files Added (Task 2.6):
+    - apps/kiosk/src/components/ErrorBoundary.tsx
+    - apps/kiosk/src/components/LoadingOverlay.tsx
+    - apps/kiosk/src/components/index.ts
+  - Files Updated (Task 2.6):
+    - apps/kiosk/App.tsx (added ErrorBoundary + StatusBar)
+    - apps/kiosk/src/features/registration/screens/RegistrationScreen.tsx (LoadingOverlay + improved error handling)
+  - Code Review: Ran via general-purpose subagent
+    - All requirements verified (AC-WL-001, AC-WL-002, AC-WL-008, AC-DEV-002)
+    - Found 2 blocking issues, fixed both
+  - Review Fixes Applied:
+    - apps/kiosk/src/features/registration/components/PhoneInput.tsx (added onBlur prop)
+    - apps/kiosk/src/features/registration/components/GuestForm.tsx (pass onBlur to PhoneInput)
+    - apps/kiosk/src/services/waitlistApi.ts (fixed types to match backend schema)
+    - apps/kiosk/src/features/registration/screens/RegistrationScreen.tsx (use guest_name)
+  - Tests: 20 core + 9 kiosk (passing before shell issue)
+  - Git: NOT YET COMMITTED (shell broken)
+  - Action Required: git commit, npm install, run tests
+  - Next: Commit Phase 2, test on simulator, start Phase 3

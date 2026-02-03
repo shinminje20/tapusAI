@@ -13,26 +13,27 @@ export interface AddGuestRequest {
 
 /**
  * API response types (matching backend schemas)
+ * See: backend/app/api/v1/schemas/waitlist.py
  */
 export interface WaitlistEntryResponse {
   id: number;
-  name: string;
-  phone_number: string;
+  guest_id: number;
   party_size: number;
-  position: number;
-  eta_minutes: number | null;
   status: 'waiting' | 'seated' | 'canceled' | 'no_show';
+  position: number;
+  vip_flag: boolean;
   source: string;
-  check_in_time: string;
-  notes: string | null;
-  is_vip: boolean;
+  created_at: string;
+  updated_at: string;
+  eta_minutes: number | null;
+  // Nested guest info for display
+  guest_name: string | null;
+  guest_phone: string | null;
 }
 
 export interface EtaResponse {
-  id: number;
-  position: number;
+  entry_id: number;
   eta_minutes: number | null;
-  status: string;
 }
 
 /**

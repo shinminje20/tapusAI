@@ -4,6 +4,7 @@ import { TextInput } from '@tapus/ui';
 export interface PhoneInputProps {
   value: string;
   onChangeText: (value: string) => void;
+  onBlur?: () => void;
   error?: string;
 }
 
@@ -34,6 +35,7 @@ function formatPhoneNumber(input: string): string {
 export function PhoneInput({
   value,
   onChangeText,
+  onBlur,
   error,
 }: PhoneInputProps) {
   const handleChange = (text: string) => {
@@ -47,6 +49,7 @@ export function PhoneInput({
       label="Phone Number"
       value={value}
       onChangeText={handleChange}
+      onBlur={onBlur}
       placeholder="(555) 123-4567"
       keyboardType="phone-pad"
       error={error}
