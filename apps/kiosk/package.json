@@ -1,0 +1,39 @@
+{
+  "name": "@tapus/kiosk",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@react-navigation/native": "latest",
+    "@react-navigation/native-stack": "latest",
+    "@reduxjs/toolkit": "latest",
+    "@tapus/core": "*",
+    "@tapus/ui": "*",
+    "expo": "latest",
+    "expo-status-bar": "latest",
+    "react": "latest",
+    "react-native": "latest",
+    "react-native-safe-area-context": "latest",
+    "react-native-screens": "latest",
+    "react-redux": "latest"
+  },
+  "devDependencies": {
+    "@babel/core": "latest",
+    "@testing-library/react-native": "latest",
+    "@types/jest": "latest",
+    "@types/react": "latest",
+    "jest": "latest",
+    "jest-expo": "latest",
+    "react-test-renderer": "latest",
+    "typescript": "latest"
+  }
+}

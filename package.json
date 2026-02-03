@@ -1,0 +1,18 @@
+{
+  "name": "tapusAi",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "echo \"Specify an app: npm run dev:admin | dev:kiosk | dev:guest-web\"",
+    "dev:admin": "cd apps/admin && npm start",
+    "dev:kiosk": "cd apps/kiosk && npx expo start",
+    "dev:guest-web": "cd apps/guest-web && npm start",
+    "test": "npm run test:core && npm run test:kiosk",
+    "test:core": "cd packages/core && npm test",
+    "test:kiosk": "cd apps/kiosk && npm test",
+    "lint": "echo \"lint to be wired\""
+  }
+}

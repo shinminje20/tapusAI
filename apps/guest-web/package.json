@@ -1,0 +1,9 @@
+{
+  "name": "guest-web",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "start": "echo \"Web app not yet initialized\""
+  }
+}
