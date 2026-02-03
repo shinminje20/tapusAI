@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Owner Analytics Dashboard View</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2234",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Landscape specific adjustments for mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .landscape-grid {
+                grid-template-columns: 2fr 1.2fr 1.2fr;
+            }
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-x-hidden">
+    <!-- Main Container -->
+    <div class="relative flex min-h-screen w-full flex-col">
+        <!-- Header -->
+        <header
+            class="flex items-center justify-between px-4 py-3 bg-white dark:bg-[#111722] border-b border-gray-200 dark:border-[#232f48]">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary" style="font-size: 24px;">storefront</span>
+                    <div>
+                        <h2 class="text-sm font-bold leading-tight dark:text-white">Downtown Bistro</h2>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">San Francisco, CA</p>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-400" style="font-size: 20px;">expand_more</span>
+                </div>
+                <!-- Date Selector (Tablet/Landscape) -->
+                <div class="hidden sm:flex items-center gap-2 bg-gray-100 dark:bg-[#232f48] rounded-lg p-1">
+                    <button
+                        class="px-3 py-1 rounded bg-white dark:bg-[#2b6cee] shadow-sm text-xs font-semibold dark:text-white">Today</button>
+                    <button
+                        class="px-3 py-1 rounded hover:bg-white/50 dark:hover:bg-white/5 text-xs font-medium text-gray-500 dark:text-gray-300">Week</button>
+                    <button
+                        class="px-3 py-1 rounded hover:bg-white/50 dark:hover:bg-white/5 text-xs font-medium text-gray-500 dark:text-gray-300">Month</button>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#232f48]">
+                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">notifications</span>
+                    <span
+                        class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 border border-white dark:border-[#111722]"></span>
+                </button>
+                <div
+                    class="h-8 w-8 rounded-full bg-gradient-to-tr from-primary to-blue-400 flex items-center justify-center text-white font-bold text-xs cursor-pointer">
+                    OA
+                </div>
+            </div>
+        </header>
+        <!-- KPI Ticker -->
+        <div
+            class="w-full bg-white dark:bg-[#1a2234] border-b border-gray-200 dark:border-[#232f48] overflow-x-auto no-scrollbar">
+            <div class="flex min-w-max px-4 py-3 gap-6 divide-x divide-gray-200 dark:divide-gray-700">
+                <div class="flex items-center gap-3 pl-2 first:pl-0">
+                    <div class="p-2 rounded-lg bg-blue-50 dark:bg-[#232f48]">
+                        <span class="material-symbols-outlined text-primary" style="font-size: 20px;">timer</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Live
+                            Wait</p>
+                        <div class="flex items-end gap-2">
+                            <span class="text-xl font-bold dark:text-white">25m</span>
+                            <span class="text-xs font-medium text-emerald-500 mb-1 flex items-center">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">trending_up</span> +5m
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pl-6">
+                    <div class="p-2 rounded-lg bg-blue-50 dark:bg-[#232f48]">
+                        <span class="material-symbols-outlined text-primary" style="font-size: 20px;">restaurant</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total
+                            Covers</p>
+                        <div class="flex items-end gap-2">
+                            <span class="text-xl font-bold dark:text-white">142</span>
+                            <span class="text-xs font-medium text-emerald-500 mb-1 flex items-center">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">trending_up</span> +12%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pl-6">
+                    <div class="p-2 rounded-lg bg-blue-50 dark:bg-[#232f48]">
+                        <span class="material-symbols-outlined text-primary" style="font-size: 20px;">payments</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Avg
+                            Check</p>
+                        <div class="flex items-end gap-2">
+                            <span class="text-xl font-bold dark:text-white">$48.50</span>
+                            <span class="text-xs font-medium text-orange-500 mb-1 flex items-center">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">trending_down</span>
+                                -2%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pl-6 pr-4">
+                    <div class="p-2 rounded-lg bg-blue-50 dark:bg-[#232f48]">
+                        <span class="material-symbols-outlined text-primary" style="font-size: 20px;">groups</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Staffing
+                        </p>
+                        <div class="flex items-end gap-2">
+                            <span class="text-xl font-bold dark:text-white">8/10</span>
+                            <span class="text-xs font-medium text-red-400 mb-1 flex items-center">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">warning</span> -2
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Dashboard Grid Content -->
+        <main class="flex-1 p-4 overflow-y-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
+                <!-- Section 1: Predictive Traffic (Takes up largest space) -->
+                <div class="lg:col-span-7 flex flex-col gap-4">
+                    <div
+                        class="bg-white dark:bg-[#1a2234] rounded-xl p-5 border border-gray-200 dark:border-[#232f48] shadow-sm flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-lg font-bold dark:text-white flex items-center gap-2">
+                                    Predictive Traffic
+                                    <span
+                                        class="bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border border-yellow-200 dark:border-yellow-700/50">
+                                        AI Powered
+                                    </span>
+                                </h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Projected hourly covers vs
+                                    capacity</p>
+                            </div>
+                            <div class="text-right">
+                                <p
+                                    class="text-xs font-bold text-orange-500 bg-orange-50 dark:bg-orange-900/20 px-3 py-1 rounded-full border border-orange-100 dark:border-orange-800/30 flex items-center gap-1">
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">warning</span>
+                                    Peak: 7PM (110%)
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Chart Area -->
+                        <div class="relative flex-1 min-h-[220px] w-full">
+                            <!-- Y-axis Labels -->
+                            <div
+                                class="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-xs text-gray-400 font-medium pr-2 border-r border-dashed border-gray-700/30 h-full">
+                                <span>150</span>
+                                <span>100</span>
+                                <span>50</span>
+                                <span>0</span>
+                            </div>
+                            <!-- Chart Canvas Simulator -->
+                            <div class="ml-8 h-full flex flex-col justify-end relative">
+                                <!-- Grid Lines -->
+                                <div
+                                    class="absolute w-full top-0 h-px bg-gray-200 dark:bg-gray-700/30 border-t border-dashed border-gray-300 dark:border-gray-700">
+                                </div>
+                                <div
+                                    class="absolute w-full top-1/3 h-px bg-gray-200 dark:bg-gray-700/30 border-t border-dashed border-gray-300 dark:border-gray-700">
+                                </div>
+                                <div
+                                    class="absolute w-full top-2/3 h-px bg-gray-200 dark:bg-gray-700/30 border-t border-dashed border-gray-300 dark:border-gray-700">
+                                </div>
+                                <!-- The Chart SVG -->
+                                <svg class="w-full h-[calc(100%-2rem)] overflow-visible" preserveaspectratio="none"
+                                    viewbox="0 0 500 150">
+                                    <defs>
+                                        <lineargradient id="gradientPrimary" x1="0" x2="0" y1="0" y2="1">
+                                            <stop offset="0%" stop-color="#2b6cee" stop-opacity="0.4"></stop>
+                                            <stop offset="100%" stop-color="#2b6cee" stop-opacity="0"></stop>
+                                        </lineargradient>
+                                    </defs>
+                                    <!-- Area Fill -->
+                                    <path
+                                        d="M0 150 L0 100 C 50 100, 70 80, 100 60 C 130 40, 160 20, 200 10 C 240 0, 280 10, 320 40 C 360 70, 400 90, 450 110 L 500 120 L 500 150 Z"
+                                        fill="url(#gradientPrimary)"></path>
+                                    <!-- Stroke Line -->
+                                    <path
+                                        d="M0 100 C 50 100, 70 80, 100 60 C 130 40, 160 20, 200 10 C 240 0, 280 10, 320 40 C 360 70, 400 90, 450 110 L 500 120"
+                                        fill="none" stroke="#2b6cee" stroke-linecap="round" stroke-width="3"></path>
+                                    <!-- Peak Point Dot -->
+                                    <circle cx="200" cy="10" fill="#1a2234" r="6" stroke="#fa6238" stroke-width="3">
+                                    </circle>
+                                    <!-- Capacity Line -->
+                                    <line opacity="0.6" stroke="#fa6238" stroke-dasharray="4 4" stroke-width="1" x1="0"
+                                        x2="500" y1="20" y2="20"></line>
+                                    <text fill="#fa6238" font-size="10" opacity="0.8" text-anchor="end" x="480"
+                                        y="15">Max Capacity</text>
+                                </svg>
+                                <!-- X-axis Labels -->
+                                <div
+                                    class="flex justify-between w-full pt-4 border-t border-gray-200 dark:border-gray-700">
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">4 PM</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">5 PM</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">6 PM</span>
+                                    <span class="text-xs font-bold text-primary dark:text-white">7 PM</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">8 PM</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">9 PM</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">10 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column Stack -->
+                <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-4 h-full">
+                    <!-- Section 2: Staffing Recommendations -->
+                    <div
+                        class="flex-1 bg-white dark:bg-[#1a2234] rounded-xl p-5 border border-gray-200 dark:border-[#232f48] shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base font-bold dark:text-white flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary"
+                                    style="font-size: 20px;">badge</span>
+                                Staffing Insights
+                            </h3>
+                            <span
+                                class="text-xs font-medium text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded border border-emerald-100 dark:border-emerald-900/30">
+                                Action Needed
+                            </span>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <!-- Action Card 1 -->
+                            <div
+                                class="p-3 rounded-lg bg-orange-50 dark:bg-orange-900/10 border border-orange-100 dark:border-orange-800/30 flex flex-col gap-3">
+                                <div class="flex gap-3">
+                                    <div
+                                        class="bg-orange-100 dark:bg-orange-900/40 rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0 text-orange-600 dark:text-orange-400">
+                                        <span class="material-symbols-outlined"
+                                            style="font-size: 18px;">person_add</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold dark:text-gray-200">Server Shortage Predicted
+                                        </p>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-0.5">High volume expected
+                                            Friday 6-9PM. Recommend +1 Server.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 justify-end">
+                                    <button
+                                        class="px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Dismiss</button>
+                                    <button
+                                        class="px-3 py-1.5 text-xs font-bold text-white bg-primary hover:bg-blue-600 rounded shadow-sm transition-colors flex items-center gap-1">
+                                        <span class="material-symbols-outlined" style="font-size: 14px;">check</span>
+                                        Approve Shift
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Action Card 2 (Secondary/Less urgent) -->
+                            <div
+                                class="p-3 rounded-lg bg-gray-50 dark:bg-[#232f48]/50 border border-gray-100 dark:border-[#232f48] flex items-start gap-3 opacity-75 hover:opacity-100 transition-opacity">
+                                <div
+                                    class="bg-blue-100 dark:bg-blue-900/30 rounded-full h-8 w-8 flex items-center justify-center flex-shrink-0 text-primary">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">celebration</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium dark:text-gray-300">Host Stand Overlap</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Cut 1 host at 8:30PM to
+                                        save 1.5hrs labor.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Section 3: Guest Intent Summary -->
+                    <div
+                        class="flex-1 bg-white dark:bg-[#1a2234] rounded-xl p-5 border border-gray-200 dark:border-[#232f48] shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base font-bold dark:text-white flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary"
+                                    style="font-size: 20px;">favorite</span>
+                                Guest Intent
+                            </h3>
+                            <button class="text-xs text-primary hover:underline">View All</button>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Top starred items by guests currently
+                            on waitlist.</p>
+                        <div class="flex flex-col gap-3">
+                            <!-- Item 1 -->
+                            <div class="flex items-center justify-between group cursor-pointer">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="h-10 w-10 rounded-lg bg-gray-200 dark:bg-gray-700 overflow-hidden relative">
+                                        <img alt="Fries" class="w-full h-full object-cover"
+                                            data-alt="Truffle fries in a basket"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-og047QzCZjPtjQaIxSYdAXSywOUIaxK4BulZoXhyW63sZGX7nWFxPeUc7EtmaHjHx_kdRBfpt30wOZWWjs_6IRMJUfIsoqDk6dSWvpl-S_adUgBcQLDk82WM1sUyEz8oewzY-HtxT2A8a_qoA8-L4IFXBCgcZJ8n-5BtHFEbpZ_m8dihP-WauuAkAMmHJ5I4q5fERDZrkMuKA-ZB4ajHXniud7DAio267xqR1dUtn3FooaR9xh7Oz8xVcHWWrvFfflvhj4QukuYG" />
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-sm font-semibold dark:text-gray-200 group-hover:text-primary transition-colors">
+                                            Truffle Fries</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">$12.00 • Appetizer</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/10 px-2 py-1 rounded-md border border-yellow-100 dark:border-yellow-900/20">
+                                    <span class="material-symbols-outlined text-yellow-500 filled"
+                                        style="font-size: 14px; font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="text-xs font-bold text-yellow-700 dark:text-yellow-500">12</span>
+                                </div>
+                            </div>
+                            <!-- Item 2 -->
+                            <div class="flex items-center justify-between group cursor-pointer">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="h-10 w-10 rounded-lg bg-gray-200 dark:bg-gray-700 overflow-hidden relative">
+                                        <img alt="Burger" class="w-full h-full object-cover"
+                                            data-alt="Juicy gourmet burger"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwupFeAWh99mmzXD_G8GnRPHRbw_b_XW5aVnjVWuR1tBNO0Jv3_GRQ6oxf-PXyBHzlRoP8lUNutw31kbF5c4hc_ec8SFf-TBqTszvx0RxwB6drP3l2vJnj96D9Iiz315jwSM4Ymg7LOPh8o72vGYKbiquoNx0kpeqrTThoGiGCE1gluUocqw8rAyr5Y3riSywdclEcAJKdidb51zaxK18fusmBUfiHlXyPDDaSuBMNPV8qnEh7S9yf1ThcKw0u973XgQ5Vug_sZATD" />
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-sm font-semibold dark:text-gray-200 group-hover:text-primary transition-colors">
+                                            Wagyu Burger</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">$24.00 • Entree</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/10 px-2 py-1 rounded-md border border-yellow-100 dark:border-yellow-900/20">
+                                    <span class="material-symbols-outlined text-yellow-500 filled"
+                                        style="font-size: 14px; font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="text-xs font-bold text-yellow-700 dark:text-yellow-500">8</span>
+                                </div>
+                            </div>
+                            <!-- Item 3 -->
+                            <div class="flex items-center justify-between group cursor-pointer">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="h-10 w-10 rounded-lg bg-gray-200 dark:bg-gray-700 overflow-hidden relative">
+                                        <img alt="Cocktail" class="w-full h-full object-cover"
+                                            data-alt="Cocktail with garnish"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhSQSSWDf9NR9TC3uAYsQWTHmNTren6wuD4uAWhelKPJsUDZ_5AbFFisssI5ioKE_A9ms65B8QlG7SX2v2LtKSTjaUYBkbbX9qNMiurFVETK9Ru7G1nmp4xskPtiu4IXHGAL-Ocha-Uym5PDg0IfTg-L0P7PYfxlBYnnoMQUnY6R3d46w7U6VUgZsIYuyLIm1vGpDd9RTH3cvC204Lve3dUpz7BnqoH6QXT-olCii3fIgPQTqJ_4ydw8k5Ijb8yMAHfoutOssLFs1A" />
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-sm font-semibold dark:text-gray-200 group-hover:text-primary transition-colors">
+                                            Spicy Margarita</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">$16.00 • Drink</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/10 px-2 py-1 rounded-md border border-yellow-100 dark:border-yellow-900/20">
+                                    <span class="material-symbols-outlined text-yellow-500 filled"
+                                        style="font-size: 14px; font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="text-xs font-bold text-yellow-700 dark:text-yellow-500">6</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Bottom Status Bar (for freshness) -->
+        <div
+            class="w-full px-4 py-2 bg-white dark:bg-[#111722] border-t border-gray-200 dark:border-[#232f48] flex justify-between items-center text-[10px] text-gray-400">
+            <div class="flex items-center gap-1">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>System Operational</span>
+            </div>
+            <span>Data updated 2m ago</span>
+        </div>
+    </div>
+</body>
+
+</html>

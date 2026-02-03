@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Operational Insights Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#192633", // Slightly lighter than bg-dark for cards
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white antialiased">
+    <!-- Main Container -->
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden pb-24">
+        <!-- Top App Bar -->
+        <header
+            class="sticky top-0 z-50 flex items-center justify-between bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm p-4 border-b border-gray-200 dark:border-gray-800">
+            <button
+                class="flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors text-gray-900 dark:text-white">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-2">Operational Insights
+            </h1>
+            <button
+                class="flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors text-primary">
+                <span class="material-symbols-outlined">filter_list</span>
+            </button>
+        </header>
+        <!-- Date Filters (Chips) -->
+        <div class="flex gap-2 p-4 overflow-x-auto no-scrollbar snap-x">
+            <button
+                class="snap-start flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-5 transition-transform active:scale-95 shadow-lg shadow-primary/20">
+                <p class="text-sm font-medium leading-normal">Today</p>
+            </button>
+            <button
+                class="snap-start flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 text-gray-600 dark:text-gray-300 transition-colors active:bg-gray-100 dark:active:bg-gray-800">
+                <p class="text-sm font-medium leading-normal">Last 7 Days</p>
+            </button>
+            <button
+                class="snap-start flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 text-gray-600 dark:text-gray-300 transition-colors active:bg-gray-100 dark:active:bg-gray-800">
+                <p class="text-sm font-medium leading-normal">This Month</p>
+            </button>
+        </div>
+        <!-- KPI Ticker -->
+        <div class="flex gap-4 px-4 pb-4 overflow-x-auto no-scrollbar snap-x">
+            <!-- Stat 1 -->
+            <div
+                class="snap-start flex min-w-[140px] flex-col gap-2 rounded-xl p-5 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 shadow-sm">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-gray-400 text-xl">schedule</span>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Current Wait
+                    </p>
+                </div>
+                <div class="flex items-end gap-2">
+                    <p class="text-gray-900 dark:text-white text-2xl font-bold leading-none">25m</p>
+                    <span class="text-red-500 text-xs font-medium mb-0.5 flex items-center">
+                        <span class="material-symbols-outlined text-sm" style="font-size: 14px;">arrow_upward</span> 5m
+                    </span>
+                </div>
+            </div>
+            <!-- Stat 2 -->
+            <div
+                class="snap-start flex min-w-[140px] flex-col gap-2 rounded-xl p-5 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 shadow-sm">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-gray-400 text-xl">table_restaurant</span>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Tables Open
+                    </p>
+                </div>
+                <div class="flex items-end gap-2">
+                    <p class="text-gray-900 dark:text-white text-2xl font-bold leading-none">4</p>
+                    <span class="text-red-500 text-xs font-medium mb-0.5 flex items-center">
+                        <span class="material-symbols-outlined text-sm" style="font-size: 14px;">arrow_downward</span> 2
+                    </span>
+                </div>
+            </div>
+            <!-- Stat 3 -->
+            <div
+                class="snap-start flex min-w-[140px] flex-col gap-2 rounded-xl p-5 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-800 shadow-sm">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-gray-400 text-xl">groups</span>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">Active
+                        Parties</p>
+                </div>
+                <div class="flex items-end gap-2">
+                    <p class="text-gray-900 dark:text-white text-2xl font-bold leading-none">12</p>
+                    <span class="text-emerald-500 text-xs font-medium mb-0.5 flex items-center">
+                        <span class="material-symbols-outlined text-sm" style="font-size: 14px;">arrow_upward</span> 3
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- Main Chart Section -->
+        <div class="px-4 py-2">
+            <div
+                class="flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-surface-dark p-5 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-gray-900 dark:text-white text-base font-semibold leading-tight">Wait Time Trends
+                        </h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-xs mt-1">Actual vs Estimated</p>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 bg-emerald-500/10 px-2 py-1 rounded text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+                        <span class="material-symbols-outlined text-sm">trending_down</span>
+                        5% vs last week
+                    </div>
+                </div>
+                <div class="flex items-end gap-4">
+                    <div>
+                        <p class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">25m <span
+                                class="text-sm font-normal text-gray-500 dark:text-gray-400">avg</span></p>
+                    </div>
+                </div>
+                <!-- Chart Container -->
+                <div class="relative w-full h-48 mt-2">
+                    <svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 350 150">
+                        <!-- Grid Lines -->
+                        <line class="text-gray-200 dark:text-gray-700" stroke="currentColor" stroke-dasharray="4 4"
+                            stroke-width="1" x1="0" x2="350" y1="150" y2="150"></line>
+                        <line class="text-gray-200 dark:text-gray-700/50" stroke="currentColor" stroke-dasharray="4 4"
+                            stroke-width="1" x1="0" x2="350" y1="100" y2="100"></line>
+                        <line class="text-gray-200 dark:text-gray-700/50" stroke="currentColor" stroke-dasharray="4 4"
+                            stroke-width="1" x1="0" x2="350" y1="50" y2="50"></line>
+                        <!-- Estimated Line (Dashed) -->
+                        <path d="M0 120 C 50 120, 100 80, 150 70 C 200 60, 250 90, 300 85 C 325 82, 350 80, 350 80"
+                            fill="none" stroke="#94a3b8" stroke-dasharray="5 5" stroke-width="2"></path>
+                        <!-- Actual Line (Solid Primary) + Gradient Fill -->
+                        <defs>
+                            <lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+                                <stop offset="0%" stop-color="#2b8cee" stop-opacity="0.3"></stop>
+                                <stop offset="100%" stop-color="#2b8cee" stop-opacity="0"></stop>
+                            </lineargradient>
+                        </defs>
+                        <path
+                            d="M0 130 C 50 130, 80 50, 150 50 C 200 50, 230 110, 280 90 C 310 78, 330 40, 350 30 V 150 H 0 Z"
+                            fill="url(#chartGradient)"></path>
+                        <path d="M0 130 C 50 130, 80 50, 150 50 C 200 50, 230 110, 280 90 C 310 78, 330 40, 350 30"
+                            fill="none" stroke="#2b8cee" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="3"></path>
+                        <!-- Interactive Point -->
+                        <circle class="fill-white dark:fill-surface-dark stroke-primary" cx="150" cy="50" r="4"
+                            stroke-width="3"></circle>
+                        <!-- Tooltip mockup -->
+                        <g transform="translate(130, 10)">
+                            <rect class="fill-surface-dark dark:fill-white" height="24" rx="4" width="40"></rect>
+                            <text class="fill-white dark:fill-surface-dark text-[10px] font-bold font-sans"
+                                text-anchor="middle" x="20" y="16">32m</text>
+                        </g>
+                    </svg>
+                </div>
+                <!-- X-Axis Labels -->
+                <div class="flex justify-between text-[10px] font-medium text-gray-400 uppercase tracking-wider mt-1">
+                    <span>12 PM</span>
+                    <span>2 PM</span>
+                    <span>4 PM</span>
+                    <span>6 PM</span>
+                    <span>8 PM</span>
+                    <span>10 PM</span>
+                </div>
+                <!-- Legend -->
+                <div class="flex items-center gap-4 mt-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-primary"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Actual</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-1 border-t-2 border-dashed border-gray-400"></div>
+                        <span class="text-xs text-gray-600 dark:text-gray-300">Estimated</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Turn-away Analysis Card -->
+        <div class="px-4 py-2">
+            <div
+                class="flex flex-col rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-surface-dark p-5 shadow-sm">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex flex-col gap-1">
+                        <h3 class="text-gray-900 dark:text-white text-base font-bold leading-tight">Turn-away Analysis
+                        </h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal">Peak hours: 7:00
+                            PM - 8:30 PM</p>
+                    </div>
+                    <div class="size-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                        <span class="material-symbols-outlined">person_cancel</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Circular Visualization (SVG Donut) -->
+                    <div class="relative size-24 shrink-0">
+                        <svg class="size-full rotate-[-90deg]" viewbox="0 0 36 36">
+                            <!-- Background Circle -->
+                            <path class="text-gray-200 dark:text-gray-700"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="currentColor" stroke-width="4"></path>
+                            <!-- Value Circle (75%) -->
+                            <path class="text-red-500"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-linecap="round"
+                                stroke-width="4"></path>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center flex-col">
+                            <span class="text-xl font-bold text-gray-900 dark:text-white">12</span>
+                            <span class="text-[9px] uppercase font-bold text-gray-400">Lost</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 space-y-3">
+                        <!-- Breakdown Bars -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-gray-600 dark:text-gray-300">Large Parties (6+)</span>
+                                <span class="font-bold text-gray-900 dark:text-white">8</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-red-500 w-[66%] rounded-full"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-gray-600 dark:text-gray-300">Small Groups (2-4)</span>
+                                <span class="font-bold text-gray-900 dark:text-white">4</span>
+                            </div>
+                            <div class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-orange-400 w-[33%] rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Revenue Opportunity Card (Highlight) -->
+        <div class="px-4 py-2">
+            <div
+                class="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#192633] to-[#0f1720] border border-primary/30 p-5 shadow-md group">
+                <!-- Decorative background blob -->
+                <div
+                    class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/20 blur-3xl group-hover:bg-primary/30 transition-colors">
+                </div>
+                <div class="relative z-10 flex flex-col gap-4">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="material-symbols-outlined text-primary text-xl">monetization_on</span>
+                        <h3 class="text-primary font-bold text-sm tracking-wide uppercase">Revenue Opportunity</h3>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p class="text-4xl font-bold text-white tracking-tight">$850</p>
+                            <p class="text-gray-400 text-sm mt-1">Potential from 15 pre-order interests</p>
+                        </div>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between gap-4">
+                        <div class="flex -space-x-2">
+                            <!-- Avatars -->
+                            <div class="size-8 rounded-full ring-2 ring-[#192633] bg-cover bg-center"
+                                data-alt="Portrait of a smiling woman"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvZYFbmUpA1X8tvsAmsUX6Qi3EuOkh6R9nX0lqzoU5NijlTfaXn9OjOiVTRi4C6SgvfIqO8vTLpOuK-cyDVvQ2QDcdZavA6BO7k9E3ezDN_1mgfI17j3n8ZeAa5C_3pKGVKVNiSLE92hxuKIhhQ5Epv3WGpD9fxHVk_066kiLDt3nc3bNO55XL_ONCeXp5eZvYQkc-9CJGyS3tw74lDZUYs7Cio9282rgwcm9H58pIQqOM9eXePOhjvCUrwV-n-EX_-b2MLUdsAkBe");'>
+                            </div>
+                            <div class="size-8 rounded-full ring-2 ring-[#192633] bg-cover bg-center"
+                                data-alt="Portrait of a serious man"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAld-vz3U4p3zkDnErfL2Dff3FKmbJRq-6dteD0SuWNYw-72Rs4e_h4aijFVeCmU9jxfb0TMPh3LSokyPz_aulsEPccL2i5cIG82UP7Ilap6zydYUxZVAM3bVC1GAxu4PNTM1dQUPFUeZP-cIcl5m4L4sAINRnsVRCQ-WJ_0nTyR7KjIVh5VEV75lycvKvggq6NZfTfPPQElLuV7ZZKOvC7EiV4Vw9O0b6jtx34KcESsJQOovawx5D1Scjy3uZJMtELgwsMZh2pFyS1");'>
+                            </div>
+                            <div class="size-8 rounded-full ring-2 ring-[#192633] bg-cover bg-center"
+                                data-alt="Portrait of a smiling man"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrOW22iunyNzvLcOE4-sgZaacOqDrNH_sFd9QLgWj4pRPUb2vt9sTPv32BDBBAsqH0FUEHa3uMDMRC2UwV-RS146nmw2jyVvxDfcTIwqZJmJjyd9enIlIpcZc2vyvm2idlZhCqL8Kzi5cMHdP5yb448hIzU_8y26_wJrJuVpfpf_flFLWWSf6ogQWuZweELpcBtnoAVWr2JLfXyOHtbXxCcJWMreVyGzX36ZV7N-vLN1hwjhqeRmvzpaZdNbvaG0vdKHn69ncx3qQV");'>
+                            </div>
+                            <div
+                                class="size-8 rounded-full ring-2 ring-[#192633] bg-gray-700 flex items-center justify-center text-[10px] text-white font-medium">
+                                +12</div>
+                        </div>
+                        <button
+                            class="bg-primary hover:bg-primary/90 text-white text-sm font-semibold py-2 px-4 rounded-lg shadow-lg shadow-primary/20 transition-all active:scale-95 whitespace-nowrap">
+                            Send Offers
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Spacer -->
+        <div class="h-6"></div>
+    </div>
+    <!-- Bottom Navigation Bar -->
+    <nav
+        class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 pb-safe pt-2 h-[84px]">
+        <button
+            class="flex flex-col items-center gap-1 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 group w-16">
+            <span
+                class="material-symbols-outlined text-2xl group-hover:-translate-y-0.5 transition-transform">dashboard</span>
+            <span class="text-[10px] font-medium">Overview</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 p-2 text-primary group w-16">
+            <span
+                class="material-symbols-outlined text-2xl group-hover:-translate-y-0.5 transition-transform font-variation-settings-fill">analytics</span>
+            <span class="text-[10px] font-medium">Insights</span>
+        </button>
+        <button
+            class="flex flex-col items-center gap-1 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 group w-16">
+            <span
+                class="material-symbols-outlined text-2xl group-hover:-translate-y-0.5 transition-transform">badge</span>
+            <span class="text-[10px] font-medium">Staff</span>
+        </button>
+        <button
+            class="flex flex-col items-center gap-1 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 group w-16">
+            <span
+                class="material-symbols-outlined text-2xl group-hover:-translate-y-0.5 transition-transform">settings</span>
+            <span class="text-[10px] font-medium">Settings</span>
+        </button>
+    </nav>
+    <!-- CSS for Font Variation Settings to handle fill icons -->
+    <style>
+        .font-variation-settings-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+    </style>
+</body>
+
+</html>

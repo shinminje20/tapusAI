@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kiosk Registration Tablet View</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-white h-screen w-screen overflow-hidden selection:bg-primary selection:text-white">
+    <!-- Split Screen Layout -->
+    <div class="flex h-full w-full flex-row">
+        <!-- Left Panel: Hero Image (45% Width) -->
+        <div class="hidden lg:block w-5/12 h-full relative overflow-hidden bg-gray-900 group/image-panel">
+            <!-- Background Image -->
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover/image-panel:scale-105"
+                data-alt="Top down view of a delicious gourmet salmon dish with asparagus and lemon butter sauce"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqiyklIKY6JowsTEtfMJykycvHJD_LnZPFAfB3srdOKMfTG9d93mRq10A-cwBl3TZQ_W2ccCg88ZhmyOfJU76Mrccw7skws70srpaO7ca7pclPZGa67HHCfKcylzn64Em_X9FX2UJ8HIoDRKVFyUjzIH9M11-651iK8N21LLZWGEsdC9JHUJQfkqSRYwwCZcZyEygAyqv0SMImNX0KLP2stDPUIJAu58E0iwZVCTbnWEn85DcqZxr5Ldd6NKcsiwktrhqo5chJGuLc");'>
+            </div>
+            <!-- Gradient Overlay for Contrast -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
+            <!-- Branding Area -->
+            <div class="absolute top-10 left-10">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-white text-4xl">restaurant_menu</span>
+                    <span class="text-white font-bold text-2xl tracking-wide">Lumière Bistro</span>
+                </div>
+            </div>
+            <!-- Mood Text -->
+            <div class="absolute bottom-12 left-10 right-10">
+                <h2 class="text-white text-4xl font-bold leading-tight drop-shadow-lg">Experience flavors that tell a
+                    story.</h2>
+                <p class="text-gray-200 mt-3 text-lg font-medium opacity-90">Your table is just a few moments away.</p>
+            </div>
+        </div>
+        <!-- Right Panel: Registration Form (55% Width) -->
+        <div class="w-full lg:w-7/12 h-full bg-white dark:bg-background-dark flex flex-col relative">
+            <!-- Top Bar (Mobile Only Logo / Actions) -->
+            <div class="lg:hidden flex justify-between items-center p-6 border-b border-gray-100 dark:border-gray-800">
+                <span class="font-bold text-xl">Lumière Bistro</span>
+                <div class="flex gap-2">
+                    <span
+                        class="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 px-3 py-1 rounded-full text-sm font-medium">Open</span>
+                </div>
+            </div>
+            <!-- Scrollable Content Area -->
+            <div class="flex-1 overflow-y-auto p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                <div class="max-w-xl mx-auto w-full">
+                    <!-- Header -->
+                    <div class="mb-10">
+                        <h1 class="text-4xl md:text-5xl font-bold text-[#0d141b] dark:text-white tracking-tight mb-3">
+                            Join the Waitlist</h1>
+                        <div class="flex items-center gap-2 text-primary">
+                            <span class="material-symbols-outlined fill-current">timer</span>
+                            <p class="text-lg font-medium">Current wait time: <span class="font-bold">~15 mins</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Form -->
+                    <form class="flex flex-col gap-8">
+                        <!-- Name Field -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-base font-medium text-gray-700 dark:text-gray-300 ml-1">Full Name</label>
+                            <div class="relative group">
+                                <input
+                                    class="w-full h-[72px] rounded-xl border-2 border-gray-200 bg-background-light px-5 pl-5 text-xl text-[#0d141b] placeholder:text-gray-400 focus:border-primary focus:ring-0 focus:outline-none focus:bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:border-primary transition-all duration-200"
+                                    placeholder="e.g. Jane Doe" type="text" />
+                                <div
+                                    class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-[28px]">person</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Party Size (Custom Stepper) -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-base font-medium text-gray-700 dark:text-gray-300 ml-1">Party
+                                Size</label>
+                            <div class="flex items-center gap-4 h-[88px]">
+                                <!-- Decrease Button -->
+                                <button
+                                    class="h-full aspect-square flex items-center justify-center rounded-2xl border-2 border-gray-200 bg-white text-primary hover:border-primary hover:bg-blue-50 active:scale-95 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-primary dark:hover:bg-gray-700"
+                                    type="button">
+                                    <span class="material-symbols-outlined text-4xl font-bold">remove</span>
+                                </button>
+                                <!-- Display -->
+                                <div
+                                    class="h-full flex-1 flex flex-col items-center justify-center rounded-2xl bg-background-light border-2 border-transparent dark:bg-gray-800">
+                                    <span class="text-4xl font-bold text-[#0d141b] dark:text-white">2</span>
+                                    <span
+                                        class="text-sm font-medium text-gray-500 uppercase tracking-wider">Guests</span>
+                                </div>
+                                <!-- Increase Button -->
+                                <button
+                                    class="h-full aspect-square flex items-center justify-center rounded-2xl border-2 border-primary bg-primary text-white shadow-lg shadow-blue-200 hover:bg-blue-600 active:scale-95 transition-all duration-200 dark:shadow-none"
+                                    type="button">
+                                    <span class="material-symbols-outlined text-4xl font-bold">add</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-base font-medium text-gray-700 dark:text-gray-300 ml-1">Phone
+                                Number</label>
+                            <div class="relative group">
+                                <input
+                                    class="w-full h-[72px] rounded-xl border-2 border-gray-200 bg-background-light px-5 pl-5 text-xl text-[#0d141b] placeholder:text-gray-400 focus:border-primary focus:ring-0 focus:outline-none focus:bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:border-primary transition-all duration-200"
+                                    placeholder="(555) 000-0000" type="tel" />
+                                <div
+                                    class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-[28px]">smartphone</span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 ml-1 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">sms</span>
+                                We'll text you when your table is ready.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Footer Action Area (Sticky Bottom) -->
+            <div
+                class="p-8 md:p-12 border-t border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-background-dark/95 backdrop-blur-sm z-10">
+                <div class="max-w-xl mx-auto w-full">
+                    <button
+                        class="w-full h-[80px] bg-primary hover:bg-blue-600 text-white rounded-2xl text-2xl font-bold shadow-xl shadow-blue-500/20 active:shadow-sm active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-3">
+                        <span>Join the Waitlist</span>
+                        <span class="material-symbols-outlined text-3xl">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

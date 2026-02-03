@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Restaurant Host Stand Dashboard</title>
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#161b26",
+                        "card-dark": "#1c2333",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        /* Custom scrollbar for dark mode webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+
+        .material-symbols-filled {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            font-variation-settings:
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display h-screen w-screen overflow-hidden flex">
+    <!-- Left Panel: Waitlist -->
+    <aside class="w-[380px] flex-shrink-0 flex flex-col border-r border-white/10 bg-[#111722] h-full">
+        <!-- Header -->
+        <div class="p-5 pb-3 flex items-center justify-between bg-[#111722] z-10">
+            <div>
+                <h2 class="text-xl font-bold tracking-tight text-white">Waitlist</h2>
+                <p class="text-sm text-slate-400 mt-0.5">12 Parties Waiting</p>
+            </div>
+            <button
+                class="flex items-center justify-center size-10 rounded-full hover:bg-white/5 transition-colors text-white">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+        </div>
+        <!-- Filter/Tabs -->
+        <div class="px-5 pb-4">
+            <div class="flex gap-2 text-sm font-medium">
+                <button
+                    class="px-3 py-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors">All</button>
+                <button
+                    class="px-3 py-1.5 rounded-full bg-transparent text-slate-400 hover:text-white transition-colors">Pre-orders</button>
+                <button
+                    class="px-3 py-1.5 rounded-full bg-transparent text-slate-400 hover:text-white transition-colors">VIP</button>
+            </div>
+        </div>
+        <!-- List Container -->
+        <div class="flex-1 overflow-y-auto px-3 pb-4 space-y-2">
+            <!-- Card 1: Normal -->
+            <div
+                class="group flex items-center gap-3 p-3 rounded-xl bg-card-dark border border-transparent hover:border-white/10 transition-all cursor-pointer">
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-grab active:cursor-grabbing">drag_indicator</span>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-semibold text-base text-white">Sarah M.</h3>
+                        <span
+                            class="text-xs font-medium text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded">15m</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-400">
+                        <span class="flex items-center gap-1"><span
+                                class="material-symbols-outlined text-[16px]">group</span> 4</span>
+                        <span>•</span>
+                        <span>Walk-in</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2: Selected -->
+            <div
+                class="relative group flex items-center gap-3 p-3 rounded-xl bg-primary/10 border border-primary shadow-[0_0_15px_-5px_rgba(19,91,236,0.5)] transition-all cursor-pointer">
+                <!-- Selection Indicator -->
+                <div class="absolute left-0 top-3 bottom-3 w-1 bg-primary rounded-r-full"></div>
+                <span
+                    class="material-symbols-outlined text-primary cursor-grab active:cursor-grabbing pl-2">drag_indicator</span>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-base text-white">John D.</h3>
+                        <span class="text-xs font-medium text-green-400 bg-green-400/10 px-2 py-0.5 rounded">5m</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-300">
+                        <span class="flex items-center gap-1"><span
+                                class="material-symbols-outlined text-[16px]">group</span> 2</span>
+                        <span>•</span>
+                        <span class="flex items-center gap-1 text-primary-300 font-medium">
+                            <span class="material-symbols-outlined text-[16px] text-primary">restaurant</span> Pre-order
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3: Normal with Pre-order -->
+            <div
+                class="group flex items-center gap-3 p-3 rounded-xl bg-card-dark border border-transparent hover:border-white/10 transition-all cursor-pointer">
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-grab active:cursor-grabbing">drag_indicator</span>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-semibold text-base text-white">Alice K.</h3>
+                        <span
+                            class="text-xs font-medium text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded">25m</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-400">
+                        <span class="flex items-center gap-1"><span
+                                class="material-symbols-outlined text-[16px]">group</span> 6</span>
+                        <span>•</span>
+                        <span class="flex items-center gap-1 text-blue-400">
+                            Pre-order
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div
+                class="group flex items-center gap-3 p-3 rounded-xl bg-card-dark border border-transparent hover:border-white/10 transition-all cursor-pointer">
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-grab active:cursor-grabbing">drag_indicator</span>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-semibold text-base text-white">Mike R.</h3>
+                        <span class="text-xs font-medium text-red-400 bg-red-400/10 px-2 py-0.5 rounded">30m</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-400">
+                        <span class="flex items-center gap-1"><span
+                                class="material-symbols-outlined text-[16px]">group</span> 2</span>
+                        <span>•</span>
+                        <span>Walk-in</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div
+                class="group flex items-center gap-3 p-3 rounded-xl bg-card-dark border border-transparent hover:border-white/10 transition-all cursor-pointer">
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-grab active:cursor-grabbing">drag_indicator</span>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-semibold text-base text-white">Emma W.</h3>
+                        <span class="text-xs font-medium text-red-400 bg-red-400/10 px-2 py-0.5 rounded">35m</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-400">
+                        <span class="flex items-center gap-1"><span
+                                class="material-symbols-outlined text-[16px]">group</span> 3</span>
+                        <span>•</span>
+                        <span>Reservation</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div
+                class="group flex items-center gap-3 p-3 rounded-xl bg-card-dark border border-transparent hover:border-white/10 transition-all cursor-pointer">
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-grab active:cursor-grabbing">drag_indicator</span>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-semibold text-base text-white">Liam T.</h3>
+                        <span class="text-xs font-medium text-red-400 bg-red-400/10 px-2 py-0.5 rounded">40m</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-400">
+                        <span class="flex items-center gap-1"><span
+                                class="material-symbols-outlined text-[16px]">group</span> 5</span>
+                        <span>•</span>
+                        <span>Walk-in</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- Right Panel: Detail View -->
+    <main class="flex-1 flex flex-col bg-surface-dark h-full overflow-hidden">
+        <!-- Detail Header -->
+        <header class="flex-shrink-0 p-6 pb-2 border-b border-white/5 bg-[#141924]">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">John D.</h1>
+                    <div class="flex items-center gap-4 text-slate-400">
+                        <div class="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+                            <span class="material-symbols-outlined text-lg">group</span>
+                            <span class="text-sm font-medium">Party of 2</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+                            <span class="material-symbols-outlined text-lg">schedule</span>
+                            <span class="text-sm font-medium">Est. Seating: 7:45 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-full">
+                            <span class="material-symbols-outlined text-lg">call</span>
+                            <span class="text-sm font-medium">+1 (555) 123-4567</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span
+                        class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm font-bold border border-green-500/20">Checked
+                        In</span>
+                </div>
+            </div>
+            <!-- Primary Actions -->
+            <div class="grid grid-cols-2 gap-4 mt-6 mb-2">
+                <button
+                    class="flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white h-14 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 active:scale-[0.98]">
+                    <span class="material-symbols-outlined">notifications_active</span>
+                    Notify Table Ready
+                </button>
+                <button
+                    class="flex items-center justify-center gap-2 bg-white/5 hover:bg-red-500/10 hover:text-red-400 text-slate-300 border border-white/5 hover:border-red-500/30 h-14 rounded-xl text-lg font-medium transition-all active:scale-[0.98]">
+                    <span class="material-symbols-outlined">person_remove</span>
+                    Remove from List
+                </button>
+            </div>
+        </header>
+        <!-- Content Split -->
+        <div class="flex-1 flex flex-col p-6 gap-6 overflow-hidden">
+            <!-- Pre-order Section -->
+            <section class="flex-shrink-0">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">restaurant_menu</span>
+                        Pre-order Summary
+                    </h3>
+                    <button class="text-sm text-primary hover:text-blue-400 font-medium">View Full Menu</button>
+                </div>
+                <div class="bg-card-dark rounded-xl p-4 border border-white/5 shadow-sm">
+                    <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                        <!-- Item 1 -->
+                        <div class="flex items-center gap-3 bg-white/5 p-2 pr-4 rounded-lg min-w-[200px]">
+                            <div class="size-12 rounded-md bg-gray-700 overflow-hidden flex-shrink-0 relative">
+                                <img alt="Plate of fresh sushi rolls with tuna and avocado"
+                                    class="w-full h-full object-cover"
+                                    data-alt="Plate of fresh sushi rolls with tuna and avocado"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtSV9LjXMjQObGUVSX2Fd3KGJwnGhS29-Udk1nRWt7pdHFswIxvbyoRd2eTocO9RZAG3eXpgM9mvnXA5W5s_kDnQMd057htH9ABZCvWOx2cUGbnkipRQwydtJ4YW9CWI-wHitFV6mChKNNOn1CKQrQbi-op8XFp-8nL5ot21UXtTUsYguZ_HqOxS2bOXTP-Utd-i6NsLwTGCjP7nEudvWAX4T_WZf5XyZiEBlZKfJF5jDgSPW7IvSp4wSOZt9Tba1X2xirzn66q4YF" />
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-white font-medium text-sm">Spicy Tuna Roll</span>
+                                <span class="text-slate-400 text-xs">Qty: 2</span>
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="flex items-center gap-3 bg-white/5 p-2 pr-4 rounded-lg min-w-[200px]">
+                            <div class="size-12 rounded-md bg-gray-700 overflow-hidden flex-shrink-0 relative">
+                                <img alt="Bowl of steamed edamame beans with salt" class="w-full h-full object-cover"
+                                    data-alt="Bowl of steamed edamame beans with salt"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOG9xqfjs13jjVyk7dWwoTn3K1vM6oRhKXpSO1tYk8ZnphQzLRFuz4CCY6e7x_7SerHBcZbpxWaSQYdZHWgn8G8sta3q4b9U9qc8nG_ca6okkOEzOF1fGs-kAQHaEsMw5ZYajuWmpJ1jHR0z6aQRjKUuktA0HYaE9-5wGvgj-b7ilwChI0gOTEdpdQXx6YCwjf6JJk-ALagw5NufnLsEDXlkHHjFvEp3b_9JV6cXUQ_By1VFQwBJf3vYjfmNpsqs5adFG9ppN2Soop" />
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-white font-medium text-sm">Edamame</span>
+                                <span class="text-slate-400 text-xs">Qty: 1</span>
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="flex items-center gap-3 bg-white/5 p-2 pr-4 rounded-lg min-w-[200px]">
+                            <div class="size-12 rounded-md bg-gray-700 overflow-hidden flex-shrink-0 relative">
+                                <img alt="Scoop of green tea ice cream in a small bowl"
+                                    class="w-full h-full object-cover"
+                                    data-alt="Scoop of green tea ice cream in a small bowl"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnikzEEXuth43nxJum8nIYwGXbO7_cp6lQ-eqFw4X6C-DkyyXN50tsvZ389R_VFJJSF4dSY2CIqCnlktDHbceSQBkRhKfczW9-WkZaVINRRd8wg1SZ-pxDjJuX9VCzQ0hiG4Ycmmfr13PwMgOZVKIczJ0xQQZgSnnFJvEfWTuEfCKN3d6PN_OAeaexLrO4-LM8i6VX0eV6KbrHC-cp6V2UAgFxioBeeNGOJ002PJq6UeVOK9XWuwsdbscMg00koKkSn2GFgfDqkJ8w" />
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-white font-medium text-sm">Green Tea Ice Cream</span>
+                                <span class="text-slate-400 text-xs">Qty: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Chat / Communication Module -->
+            <section class="flex-1 flex flex-col min-h-0 bg-card-dark rounded-xl border border-white/5 overflow-hidden">
+                <div class="p-3 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider pl-2">SMS Communication</h3>
+                    <span class="text-xs text-green-400 flex items-center gap-1">
+                        <span class="size-2 rounded-full bg-green-500"></span> Active
+                    </span>
+                </div>
+                <!-- Messages Area -->
+                <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <!-- System Message -->
+                    <div class="flex justify-center">
+                        <span class="text-xs text-slate-500 bg-white/5 px-3 py-1 rounded-full">Automated Welcome sent
+                            7:15 PM</span>
+                    </div>
+                    <!-- Guest Message -->
+                    <div class="flex justify-start">
+                        <div class="max-w-[70%] bg-white/10 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                            <p class="text-sm text-slate-200">Hi! We're running about 5 mins late finding parking. Is
+                                that okay?</p>
+                            <span class="text-[10px] text-slate-500 mt-1 block">7:22 PM</span>
+                        </div>
+                    </div>
+                    <!-- Staff Reply (Placeholder visual) -->
+                    <div class="flex justify-end">
+                        <div class="max-w-[70%] bg-primary rounded-2xl rounded-tr-sm px-4 py-2.5">
+                            <p class="text-sm text-white">No problem at all! We'll hold your table. See you soon!</p>
+                            <span class="text-[10px] text-blue-200 mt-1 block">7:23 PM</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Input Area -->
+                <div class="p-3 bg-white/[0.02] border-t border-white/5">
+                    <!-- Quick Chips -->
+                    <div class="flex gap-2 mb-3 overflow-x-auto pb-1 scrollbar-hide">
+                        <button
+                            class="whitespace-nowrap px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-xs text-slate-300 transition-colors">Table
+                            is ready</button>
+                        <button
+                            class="whitespace-nowrap px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-xs text-slate-300 transition-colors">Running
+                            late?</button>
+                        <button
+                            class="whitespace-nowrap px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-xs text-slate-300 transition-colors">On
+                            my way</button>
+                    </div>
+                    <!-- Text Input -->
+                    <div class="relative">
+                        <input
+                            class="w-full bg-[#0f131a] border border-white/10 rounded-lg pl-4 pr-12 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                            placeholder="Type a message..." type="text" />
+                        <button
+                            class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-primary hover:text-white hover:bg-primary rounded-md transition-all">
+                            <span class="material-symbols-outlined text-[20px]">send</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

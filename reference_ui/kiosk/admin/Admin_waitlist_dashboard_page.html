@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Host Waitlist Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&amp;family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3b82f6", // Modern Blue Accent
+                        "primary-dark": "#2563eb", // Darker Blue
+                        "background-light": "#f3f4f6", // Gray 100
+                        "background-dark": "#18181b", // Charcoal (Zinc 950)
+                        "surface-dark": "#27272a", // Dark Gray Card (Zinc 800)
+                        "surface-darker": "#09090b", // Almost Black (Zinc 950)
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-white pb-24">
+    <div
+        class="sticky top-0 z-30 flex items-center bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-white/5">
+        <div
+            class="text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer transition-colors">
+            <span class="material-symbols-outlined text-white">menu</span>
+        </div>
+        <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Waitlist</h2>
+        <div class="flex w-12 items-center justify-end">
+            <button
+                class="flex size-12 cursor-pointer items-center justify-center overflow-hidden rounded-full hover:bg-white/10 transition-colors bg-transparent text-white p-0">
+                <span class="material-symbols-outlined text-white">search</span>
+            </button>
+        </div>
+    </div>
+    <div class="px-4 py-4">
+        <div class="flex flex-wrap gap-4">
+            <div
+                class="flex min-w-[150px] flex-1 flex-col gap-2 rounded-xl p-5 bg-surface-dark border border-white/5 shadow-lg">
+                <div class="flex items-center gap-2">
+                    <div class="p-1.5 bg-primary/10 rounded-md">
+                        <span class="material-symbols-outlined text-primary text-xl">groups</span>
+                    </div>
+                    <p class="text-gray-300 text-sm font-medium leading-normal">Total Parties</p>
+                </div>
+                <p class="text-white tracking-tight text-3xl font-extrabold leading-tight">12</p>
+            </div>
+            <div
+                class="flex min-w-[150px] flex-1 flex-col gap-2 rounded-xl p-5 bg-surface-dark border border-white/5 shadow-lg">
+                <div class="flex items-center gap-2">
+                    <div class="p-1.5 bg-primary/10 rounded-md">
+                        <span class="material-symbols-outlined text-primary text-xl">schedule</span>
+                    </div>
+                    <p class="text-gray-300 text-sm font-medium leading-normal">Avg. Wait</p>
+                </div>
+                <p class="text-white tracking-tight text-3xl font-extrabold leading-tight">25 <span
+                        class="text-base font-medium text-gray-400">min</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="flex px-4 py-2 sticky top-[72px] z-20 bg-background-dark">
+        <div
+            class="flex h-12 w-full items-center justify-center rounded-xl bg-surface-darker p-1 border border-white/5">
+            <label
+                class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm has-[:checked]:text-white text-gray-400 text-sm font-bold transition-all duration-200">
+                <span class="truncate">All</span>
+                <input class="invisible w-0 absolute" name="status-filter" type="radio" value="All" />
+            </label>
+            <label
+                class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm has-[:checked]:text-white text-gray-400 text-sm font-bold transition-all duration-200">
+                <span class="truncate">Waiting</span>
+                <input checked="" class="invisible w-0 absolute" name="status-filter" type="radio" value="Waiting" />
+            </label>
+            <label
+                class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm has-[:checked]:text-white text-gray-400 text-sm font-bold transition-all duration-200">
+                <span class="truncate">Seated</span>
+                <input class="invisible w-0 absolute" name="status-filter" type="radio" value="Seated" />
+            </label>
+            <label
+                class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm has-[:checked]:text-white text-gray-400 text-sm font-bold transition-all duration-200">
+                <span class="truncate">No-Show</span>
+                <input class="invisible w-0 absolute" name="status-filter" type="radio" value="No-Show" />
+            </label>
+        </div>
+    </div>
+    <div class="flex flex-col gap-4 p-4">
+        <div class="flex justify-between items-center mt-2 px-1">
+            <h3 class="text-white font-bold text-lg">In Line (12)</h3>
+            <button class="text-primary text-sm font-bold hover:text-primary-dark">Sort by Time</button>
+        </div>
+        <div
+            class="flex flex-col rounded-2xl bg-surface-dark p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-white/5">
+            <div class="flex justify-between items-start mb-4">
+                <div class="flex items-start gap-3">
+                    <div
+                        class="size-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center shrink-0 border border-white/10">
+                        <span class="text-lg font-bold text-white">SJ</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h4 class="text-white font-bold text-lg leading-none">Sarah Jenkins</h4>
+                            <span
+                                class="bg-primary/20 text-primary border border-primary/30 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full tracking-wide">VIP</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-gray-400">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-symbols-outlined text-[16px]">person</span> 4</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-symbols-outlined text-[16px]">schedule</span> 15m wait</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col items-end">
+                    <div class="flex items-center gap-1 text-primary font-bold bg-primary/10 px-2 py-1 rounded-lg">
+                        <span class="material-symbols-outlined text-[18px]">timer</span>
+                        <span>15m</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-[1fr_auto_auto] gap-3">
+                <button
+                    class="flex items-center justify-center h-11 bg-primary active:bg-primary-dark text-white rounded-xl font-bold text-sm tracking-wide transition-colors shadow-sm">
+                    Seat Now
+                </button>
+                <button
+                    class="size-11 flex items-center justify-center bg-white/5 hover:bg-white/10 active:bg-white/20 text-white rounded-xl transition-colors border border-white/5">
+                    <span class="material-symbols-outlined">sms</span>
+                </button>
+                <button
+                    class="size-11 flex items-center justify-center bg-white/5 hover:bg-white/10 active:bg-white/20 text-white rounded-xl transition-colors border border-white/5">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+            </div>
+        </div>
+        <div
+            class="flex flex-col rounded-2xl bg-surface-dark p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-white/5">
+            <div class="flex justify-between items-start mb-4">
+                <div class="flex items-start gap-3">
+                    <div
+                        class="size-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center shrink-0 border border-white/10">
+                        <span class="text-lg font-bold text-white">MR</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h4 class="text-white font-bold text-lg leading-none">Mike Ross</h4>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-gray-400">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-symbols-outlined text-[16px]">person</span> 2</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-symbols-outlined text-[16px]">schedule</span> 5m wait</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col items-end">
+                    <div class="flex items-center gap-1 text-gray-300 font-bold bg-white/5 px-2 py-1 rounded-lg">
+                        <span class="material-symbols-outlined text-[18px]">timer</span>
+                        <span>5m</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-[1fr_auto_auto] gap-3">
+                <button
+                    class="flex items-center justify-center h-11 bg-primary active:bg-primary-dark text-white rounded-xl font-bold text-sm tracking-wide transition-colors shadow-sm">
+                    Seat Now
+                </button>
+                <button
+                    class="size-11 flex items-center justify-center bg-white/5 hover:bg-white/10 active:bg-white/20 text-white rounded-xl transition-colors border border-white/5">
+                    <span class="material-symbols-outlined">sms</span>
+                </button>
+                <button
+                    class="size-11 flex items-center justify-center bg-white/5 hover:bg-white/10 active:bg-white/20 text-white rounded-xl transition-colors border border-white/5">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+            </div>
+        </div>
+        <div
+            class="flex flex-col rounded-2xl bg-surface-dark p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)] border border-white/5">
+            <div class="flex justify-between items-start mb-4">
+                <div class="flex items-start gap-3">
+                    <div
+                        class="size-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center shrink-0 border border-white/10">
+                        <span class="text-lg font-bold text-white">JP</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h4 class="text-white font-bold text-lg leading-none">Jessica P.</h4>
+                            <span
+                                class="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full tracking-wide">RSVP</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-gray-400">
+                            <span class="flex items-center gap-1"><span
+                                    class="material-symbols-outlined text-[16px]">person</span> 6</span>
+                            <span class="flex items-center gap-1"><span
+                                    class="material-symbols-outlined text-[16px]">schedule</span> 35m wait</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col items-end">
+                    <div class="flex items-center gap-1 text-red-400 font-bold bg-red-500/10 px-2 py-1 rounded-lg">
+                        <span class="material-symbols-outlined text-[18px]">warning</span>
+                        <span>35m</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-[1fr_auto_auto] gap-3">
+                <button
+                    class="flex items-center justify-center h-11 bg-primary active:bg-primary-dark text-white rounded-xl font-bold text-sm tracking-wide transition-colors shadow-sm">
+                    Seat Now
+                </button>
+                <button
+                    class="size-11 flex items-center justify-center bg-white/5 hover:bg-white/10 active:bg-white/20 text-white rounded-xl transition-colors border border-white/5">
+                    <span class="material-symbols-outlined">sms</span>
+                </button>
+                <button
+                    class="size-11 flex items-center justify-center bg-white/5 hover:bg-white/10 active:bg-white/20 text-white rounded-xl transition-colors border border-white/5">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+            </div>
+        </div>
+        <div class="h-20"></div>
+    </div>
+    <div class="fixed bottom-24 right-4 z-40">
+        <button
+            class="flex size-14 items-center justify-center rounded-full bg-primary text-white shadow-[0_4px_20px_rgba(59,130,246,0.4)] hover:scale-105 active:scale-95 transition-transform">
+            <span class="material-symbols-outlined text-3xl font-bold">add</span>
+        </button>
+    </div>
+    <div class="fixed bottom-0 left-0 w-full z-50 bg-background-dark border-t border-white/5 pb-5 pt-2 px-6">
+        <div class="flex justify-between items-center max-w-md mx-auto">
+            <button class="flex flex-col items-center gap-1 text-primary group">
+                <div class="p-1 rounded-full group-hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined fill-1">dashboard</span>
+                </div>
+                <span class="text-[10px] font-bold">Waitlist</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 group transition-colors">
+                <div class="p-1 rounded-full group-hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined">table_restaurant</span>
+                </div>
+                <span class="text-[10px] font-bold">Floor</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 group transition-colors">
+                <div class="p-1 rounded-full group-hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined">settings</span>
+                </div>
+                <span class="text-[10px] font-bold">Settings</span>
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>
