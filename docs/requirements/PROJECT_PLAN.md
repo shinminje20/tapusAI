@@ -64,7 +64,7 @@ Test levels:
 
 ### Frontend
 
-- React + TypeScript
+- React native + TypeScript
 - Capacitor for kiosk/admin tablets
 - Offline-first local DB (SQLite)
 
