@@ -238,25 +238,54 @@ def test_vip_priority_queue():
 
 ## Session Continuity
 
-**At session start**, read these files to restore context:
+### Context.md (MANDATORY)
 
-1. `/logs/plan/<phase name>.md` - Current phase's plan and context
-2. `/logs/tasks/TASKS.md` - Current task state and context
-3. `/logs/WORKLOG.md` - Recent work history
-4. `git status` - Current branch and changes
+**`Context.md` is the single source of truth for session state.**
 
-**Before ending session**, run `/sync-tasks update` to persist state.
+**At session start:**
+
+1. Read `Context.md` FIRST - contains all active context
+2. Read `logs/plan/<phase name>.md` if referenced
+3. Run `git status` to verify current state
+
+**During each task run (MANDATORY):**
+
+- Update `Context.md` after completing each task or subtask
+- Track: completed files, remaining files, next actions, blockers
+
+**Before ending session (MANDATORY):**
+
+1. Update `Context.md` with final state
+2. Update "Last Updated" timestamp
+3. Update "Next Actions" section
+4. Run `/sync-tasks update`
 
 ```
+Context.md              # PRIMARY - All session context (MUST update every task run)
 logs/
-├── tasks/TASKS.md    # Persistent task state (read at session start)
-├── WORKLOG.md        # Chronological work log
-└── features/         # Per-feature status logs
+├── plan/<phase>.md     # Phase-specific detailed plans
+├── tasks/TASKS.md      # Task state backup
+├── WORKLOG.md          # Chronological work log
+└── features/           # Per-feature status logs
+```
+
+### Context.md Structure
+
+```markdown
+# Session Context
+
+- Last Updated: <timestamp>
+- Current Phase: <phase>
+- Active Tasks: <table with status>
+- Task Progress: <completed/remaining files>
+- Reference Patterns: <code snippets to follow>
+- Next Actions: <numbered list>
+- Session History: <date entries>
 ```
 
 ## Telegram Notifications (MANDATORY)
 
-**You MUST send Telegram notifications for:**
+**You MUST send Telegram notifications for each task/session steps for:**
 
 - ✅ Task completions
 - ❓ Questions requiring human input
@@ -274,9 +303,13 @@ This is how the human monitors progress and responds to requests.
 
 - Do NOT implement features without running `/req` first
 - Do NOT guess business rules - use `/ask-human`
-- Do NOT skip `/review` before pushing
+- Do NOT complete a task without `/review`
+- Do NOT end session without `/review`
 - Do NOT push with failing tests
 - Do NOT deploy without human approval
 - Do NOT add "nice to have" improvements beyond requirements
+- Do NOT complete a task without updating `Context.md`
+- Do NOT end session without updating `Context.md`
 - Do NOT end session without running `/sync-tasks update`
+- Do NOT complete a task without sending Telegram notification
 - Do NOT end session without sending Telegram notification

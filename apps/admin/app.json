@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Tapus Admin",
+    "slug": "tapus-admin",
+    "version": "1.0.0",
+    "orientation": "landscape",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#1a1a2e"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tapus.admin"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1a1a2e"
+      },
+      "package": "com.tapus.admin"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "tapus-admin"
+      }
+    }
+  }
+}

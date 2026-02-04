@@ -19,6 +19,8 @@
     "@tapus/core": "*",
     "@tapus/ui": "*",
     "expo": "latest",
+    "expo-asset": "latest",
+    "expo-font": "latest",
     "expo-status-bar": "latest",
     "react": "latest",
     "react-native": "latest",

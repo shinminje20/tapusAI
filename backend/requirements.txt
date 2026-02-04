@@ -10,3 +10,12 @@ pydantic-settings
 python-multipart
 aiosqlite
 asyncpg
+
+# Authentication (REQ-SEC-004, NFR-SEC-012)
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt>=4.0,<5.0  # Pin to 4.x for passlib compatibility
+email-validator  # Required for pydantic EmailStr
+
+# SMS Notifications (REQ-NOTIF-001)
+twilio

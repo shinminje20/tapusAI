@@ -18,6 +18,7 @@ from app.infrastructure.database import Base
 
 if TYPE_CHECKING:
     from app.domain.entities.guest import Guest
+    from app.domain.entities.notification import Notification
 
 
 class WaitlistEntry(Base):
@@ -59,6 +60,9 @@ class WaitlistEntry(Base):
 
     # Relationships
     guest: Mapped["Guest"] = relationship("Guest", back_populates="waitlist_entries")
+    notifications: Mapped[list["Notification"]] = relationship(
+        "Notification", back_populates="waitlist_entry"
+    )
 
     def __init__(
         self,

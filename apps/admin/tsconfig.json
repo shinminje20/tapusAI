@@ -1,8 +1,20 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react-native",
-    "types": ["react", "react-native"]
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tapus/core": ["../../packages/core/src"],
+      "@tapus/core/*": ["../../packages/core/src/*"],
+      "@tapus/ui": ["../../packages/ui/src"],
+      "@tapus/ui/*": ["../../packages/ui/src/*"]
+    }
   },
-  "include": ["./**/*"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "../../packages/core/src/**/*",
+    "../../packages/ui/src/**/*"
+  ],
+  "exclude": ["node_modules"]
 }

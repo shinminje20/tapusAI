@@ -4,19 +4,27 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@tapus/core": ["../../packages/core/src"],
-      "@tapus/core/*": ["../../packages/core/src/*"],
-      "@tapus/ui": ["../../packages/ui/src"],
-      "@tapus/ui/*": ["../../packages/ui/src/*"]
+      "@tapus/core": [
+        "../../packages/core/src"
+      ],
+      "@tapus/core/*": [
+        "../../packages/core/src/*"
+      ],
+      "@tapus/ui": [
+        "../../packages/ui/src"
+      ],
+      "@tapus/ui/*": [
+        "../../packages/ui/src/*"
+      ]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
     "../../packages/core/src/**/*",
     "../../packages/ui/src/**/*"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
