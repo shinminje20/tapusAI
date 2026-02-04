@@ -3,6 +3,7 @@
 REQ-WL-001-005: Waitlist schemas
 REQ-NOTIF-001: Notification schemas
 REQ-SEC-004: Auth schemas
+REQ-MENU-001: Menu schemas
 """
 
 from app.api.v1.schemas.auth import (
@@ -11,6 +12,16 @@ from app.api.v1.schemas.auth import (
     TokenResponse,
     UserCreate,
     UserResponse,
+)
+from app.api.v1.schemas.menu import (
+    MenuCategoryCreate,
+    MenuCategoryResponse,
+    MenuCategoryUpdate,
+    MenuCategoryWithItemsResponse,
+    MenuItemCreate,
+    MenuItemResponse,
+    MenuItemUpdate,
+    MenuResponse,
 )
 from app.api.v1.schemas.notification import (
     NotificationListResponse,
@@ -30,6 +41,14 @@ __all__ = [
     "GuestCreate",
     "GuestResponse",
     "LoginRequest",
+    "MenuCategoryCreate",
+    "MenuCategoryResponse",
+    "MenuCategoryUpdate",
+    "MenuCategoryWithItemsResponse",
+    "MenuItemCreate",
+    "MenuItemResponse",
+    "MenuItemUpdate",
+    "MenuResponse",
     "NotificationListResponse",
     "NotificationResponse",
     "RefreshTokenRequest",

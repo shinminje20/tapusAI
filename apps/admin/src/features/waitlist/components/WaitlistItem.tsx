@@ -7,6 +7,7 @@ import type { WaitlistEntry, WaitlistStatus } from '../../../services/waitlistAp
 import type { AdminStackParamList } from '../../../navigation/types';
 import { StatusBadge } from './StatusBadge';
 import { VIPBadge } from './VIPBadge';
+import { GuestInterestsBadge } from './GuestInterestsBadge';
 
 type NavigationProp = NativeStackNavigationProp<AdminStackParamList, 'Waitlist'>;
 
@@ -147,6 +148,9 @@ export function WaitlistItem({
               Checked in: {formatTimeSinceCheckIn(entry.created_at)}
             </Text>
           </View>
+
+          {/* Guest Interests - REQ-MENU-004: "Likely to order" display */}
+          <GuestInterestsBadge entryId={entry.id} />
         </View>
       </View>
 

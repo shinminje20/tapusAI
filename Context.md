@@ -1,7 +1,7 @@
 # Session Context
 
-**Last Updated:** 2026-02-04 (Task 3A.5 COMPLETE)
-**Current Phase:** Phase 3 - Admin Tablet App & SMS Notifications
+**Last Updated:** 2026-02-04 (Phase 4 Complete - Tasks 4B.4, 4C.2 Done)
+**Current Phase:** Phase 4 - Menu Browsing & Soft Pre-Order
 
 ---
 
@@ -98,11 +98,12 @@ backend/app/
 
 ## Backend Test Summary
 
-**Total: 107 tests passing**
+**Total: 127 tests passing**
 - Phase 1 (Waitlist): 45 tests
 - Phase 3 (Auth): 26 tests
 - Phase 3 (Notifications): 9 tests
 - Phase 3 (Reminders): 13 tests
+- Phase 4 (Menu/Guest): 20 tests
 - Other unit tests: 14 tests
 
 ---
@@ -190,10 +191,154 @@ apps/admin/src/navigation/
 
 ---
 
+## Phase 4 Progress
+
+| Task | Description | Status |
+|------|-------------|--------|
+| 4A.1 | Menu data model (MenuItem, MenuCategory, GuestInterest) | **COMPLETE** |
+| 4A.2 | Menu API endpoints (public + admin) | **COMPLETE** |
+| 4A.3 | Guest interests data model | **COMPLETE** |
+| 4A.4 | Guest interests API | **COMPLETE** |
+| 4A.5 | Guest token generation | **COMPLETE** |
+| 4B.1 | Guest web app setup | **COMPLETE** |
+| 4B.2 | Menu browsing UI | **COMPLETE** (included in 4B.1) |
+| 4B.3 | Star functionality | **COMPLETE** (included in 4B.1) |
+| 4B.4 | Soft pre-order flow | **COMPLETE** |
+| 4C.2 | "Likely to Order" display | **COMPLETE** |
+
+### Files Created (4A.1-4A.5)
+```
+backend/app/domain/entities/
+├── menu_category.py     ✅ MenuCategory entity
+├── menu_item.py         ✅ MenuItem entity
+├── guest_interest.py    ✅ GuestInterest entity
+└── waitlist_entry.py    ✅ Updated: guest_token field
+
+backend/app/infrastructure/repositories/
+├── menu_repository.py          ✅ Menu CRUD operations
+└── guest_interest_repository.py ✅ Star/preorder operations
+
+backend/app/api/v1/
+├── schemas/menu.py      ✅ Menu Pydantic schemas
+├── schemas/guest.py     ✅ Guest context/interest schemas
+├── endpoints/menu.py    ✅ Public + admin menu endpoints
+└── endpoints/guest.py   ✅ Guest token-based endpoints
+
+backend/tests/unit/
+├── test_menu_entities.py ✅ 12 tests
+└── test_guest_token.py   ✅ 8 tests
+```
+
+### API Endpoints Created
+
+**Menu (Public):**
+- `GET /api/v1/menu` - Full menu with categories
+- `GET /api/v1/menu/categories` - List categories
+- `GET /api/v1/menu/categories/{id}` - Category with items
+- `GET /api/v1/menu/items/{id}` - Single item
+
+**Menu (Admin):**
+- `POST/PUT/DELETE /api/v1/admin/menu/categories` - Category CRUD
+- `POST/PUT/DELETE /api/v1/admin/menu/items` - Item CRUD
+- `PATCH /api/v1/admin/menu/items/{id}/availability` - Toggle sold out
+
+**Guest (Token-based):**
+- `GET /api/v1/guest/{token}` - Get guest context
+- `GET /api/v1/guest/{token}/menu` - Get menu for guest
+- `GET /api/v1/guest/{token}/interests` - Get starred/preorder items
+- `POST /api/v1/guest/{token}/interests/star` - Star/unstar item
+- `POST /api/v1/guest/{token}/preorder` - Add to preorder
+- `DELETE /api/v1/guest/{token}/preorder/{item_id}` - Remove from preorder
+
+---
+
+## Guest Web App Files (4B.1-4B.3) - COMPLETE
+
+```
+apps/guest-web/
+├── package.json              ✅ Vite + React + React Query
+├── vite.config.ts            ✅ API proxy to backend
+├── tsconfig.json             ✅ TypeScript config
+├── index.html                ✅ HTML entry point
+└── src/
+    ├── main.tsx              ✅ React entry with QueryClientProvider
+    ├── App.tsx               ✅ Routing with /guest/:token
+    ├── index.css             ✅ Mobile-first global styles
+    ├── services/api.ts       ✅ API functions (typed)
+    ├── hooks/useGuestData.ts ✅ React Query hooks
+    ├── pages/
+    │   ├── index.ts          ✅ Page exports
+    │   ├── GuestPage.tsx     ✅ Main guest page with menu
+    │   └── NotFoundPage.tsx  ✅ Error/invalid token page
+    └── components/
+        ├── index.ts          ✅ Component exports
+        ├── GuestHeader.tsx   ✅ Waitlist status header
+        ├── MenuSection.tsx   ✅ Category section
+        ├── MenuItemCard.tsx  ✅ Item card with star
+        ├── LoadingScreen.tsx ✅ Loading state
+        └── ErrorScreen.tsx   ✅ Error state
+```
+
+---
+
 ## Next Actions
 
-1. **Commit Phase 3** - All tasks complete, ready for git commit
-2. **Phase 4 Planning** - Menu browsing, pre-orders, analytics (if applicable)
+1. **Phase 4 Complete** - Ready for review
+2. **Phase 5 Planning** - Analytics & Integration (optional)
+3. **Commit and push** - Phase 4 completion
+
+---
+
+## Task 4B.4 & 4C.2 - COMPLETE
+
+### Files Created/Updated (4B.4 - Soft Pre-Order Flow)
+```
+apps/guest-web/src/
+├── components/
+│   ├── QuantitySelector.tsx  ✅ Quantity +/- selector
+│   ├── PreorderCart.tsx      ✅ Cart showing pre-order items
+│   ├── Toast.tsx             ✅ Toast notifications
+│   └── index.ts              ✅ Updated exports
+├── pages/
+│   └── GuestPage.tsx         ✅ Updated with pre-order integration
+└── components/
+    ├── MenuItemCard.tsx      ✅ Updated with "Add to Pre-Order" button
+    └── MenuSection.tsx       ✅ Updated with preorder props
+```
+
+### Files Created/Updated (4C.2 - "Likely to Order" Display)
+```
+backend/app/
+├── api/v1/endpoints/
+│   └── waitlist.py           ✅ Added GET /{entry_id}/interests endpoint
+└── domain/services/
+    └── waitlist_service.py   ✅ Added get_entry_by_id method
+
+apps/admin/src/
+├── services/
+│   ├── api.ts               ✅ Added 'GuestInterests' tag
+│   └── waitlistApi.ts       ✅ Added getGuestInterests endpoint
+└── features/waitlist/components/
+    ├── GuestInterestsBadge.tsx ✅ New component for interests display
+    └── WaitlistItem.tsx      ✅ Updated to show GuestInterestsBadge
+```
+
+### API Endpoints Added
+- `GET /api/v1/waitlist/{entry_id}/interests` - Admin view of guest interests summary
+
+### Features Implemented
+- **Pre-Order Flow (Guest Web):**
+  - "Add to Pre-Order" button with quantity selector on each menu item
+  - Pre-order cart showing items with quantity controls
+  - Remove from pre-order functionality
+  - Toast notifications for feedback
+  - Mobile-first responsive design
+
+- **"Likely to Order" Display (Admin):**
+  - GuestInterestsBadge component on WaitlistItem
+  - Compact summary: "Pre-order: 2x Burger (+1 more)"
+  - Expandable modal showing full list
+  - Visual distinction between pre-order and starred items
 
 ---
 
@@ -215,6 +360,17 @@ apps/admin/src/navigation/
   - 3B.2 COMPLETE (automated reminders)
   - 3A.5 COMPLETE (admin navigation & integration)
   - **PHASE 3 COMPLETE** - All tasks done, 107 backend tests passing
+- 02/04/2026 (Session 3):
+  - 4B.1-4B.3 COMPLETE (Guest Web App)
+  - React + Vite setup with React Query
+  - Menu browsing with category sections
+  - Star functionality for interest capture
+  - Mobile-first responsive design
+- 02/04/2026 (Session 4):
+  - 4B.4 COMPLETE (Soft Pre-Order Flow)
+  - 4C.2 COMPLETE ("Likely to Order" Display)
+  - **PHASE 4 COMPLETE** - All menu/pre-order tasks done
+  - Total: 127 backend tests passing
 
 ---
 

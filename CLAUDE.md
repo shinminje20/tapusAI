@@ -252,6 +252,19 @@ def test_vip_priority_queue():
 
 - Update `Context.md` after completing each task or subtask
 - Track: completed files, remaining files, next actions, blockers
+- Run `/sync-tasks update`
+
+- **You MUST send Telegram notifications for each task/session steps for:**
+
+- ✅ Task completions
+- ❓ Questions requiring human input
+- ⚠️ Blockers or errors
+- 🚀 Deployment requests
+- Any situation requiring human attention
+
+```bash
+export $(grep -v '^#' .env | xargs) && tools/notify_telegram.sh "Your message"
+```
 
 **Before ending session (MANDATORY):**
 
@@ -281,20 +294,6 @@ logs/
 - Reference Patterns: <code snippets to follow>
 - Next Actions: <numbered list>
 - Session History: <date entries>
-```
-
-## Telegram Notifications (MANDATORY)
-
-**You MUST send Telegram notifications for each task/session steps for:**
-
-- ✅ Task completions
-- ❓ Questions requiring human input
-- ⚠️ Blockers or errors
-- 🚀 Deployment requests
-- Any situation requiring human attention
-
-```bash
-export $(grep -v '^#' .env | xargs) && tools/notify_telegram.sh "Your message"
 ```
 
 This is how the human monitors progress and responds to requests.

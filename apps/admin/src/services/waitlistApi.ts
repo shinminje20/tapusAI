@@ -48,6 +48,28 @@ export interface ReorderEntriesRequest {
 }
 
 /**
+ * Pre-order item summary
+ * AC-MENU-004: "Likely to order" visibility
+ */
+export interface PreorderSummary {
+  item_name: string;
+  quantity: number;
+}
+
+/**
+ * Guest interests summary for admin view
+ * REQ-MENU-004: Full service "likely to order" view
+ */
+export interface GuestInterestsSummary {
+  entry_id: number;
+  guest_name: string;
+  starred_count: number;
+  preorder_count: number;
+  preorder_summary: PreorderSummary[];
+  starred_items: string[];
+}
+
+/**
  * Waitlist API endpoints for admin waitlist management
  *
  * REQ-WL-002: Real-time waitlist updates across devices
@@ -120,6 +142,19 @@ export const waitlistApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Waitlist', id: 'LIST' }],
     }),
+
+    /**
+     * Get guest interests summary
+     * GET /api/v1/waitlist/{id}/interests
+     * REQ-MENU-004: Admin sees "Likely to order" summary
+     * AC-MENU-004: Visible on waitlist item
+     */
+    getGuestInterests: builder.query<GuestInterestsSummary, number>({
+      query: (entryId) => `/waitlist/${entryId}/interests`,
+      providesTags: (result, error, entryId) => [
+        { type: 'GuestInterests' as const, id: entryId },
+      ],
+    }),
   }),
 });
 
@@ -129,4 +164,5 @@ export const {
   useUpdateStatusMutation,
   useToggleVipMutation,
   useReorderEntriesMutation,
+  useGetGuestInterestsQuery,
 } = waitlistApi;

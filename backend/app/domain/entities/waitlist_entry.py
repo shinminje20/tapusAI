@@ -3,21 +3,28 @@
 REQ-WL-001: Add guests quickly
 REQ-WL-004: Ability to reorder, prioritize, or mark VIP guests
 REQ-WL-005: Status tracking
+REQ-MENU-005: Guest token for SMS link to menu
 AC-WL-001: Entry appears immediately with status 'waiting'
 AC-WL-006: VIP flagging (manual move only)
+AC-MENU-001: Guest accesses menu from SMS link via token
 """
 
-from datetime import datetime
+import secrets
+from datetime import datetime, timedelta
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Boolean, ForeignKey, Integer, String
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.domain.entities.enums import EntrySource, WaitlistStatus
 from app.infrastructure.database import Base
 
+# Token expiry in hours (24 hours default)
+DEFAULT_TOKEN_EXPIRY_HOURS = 24
+
 if TYPE_CHECKING:
     from app.domain.entities.guest import Guest
+    from app.domain.entities.guest_interest import GuestInterest
     from app.domain.entities.notification import Notification
 
 
@@ -58,10 +65,19 @@ class WaitlistEntry(Base):
     # For optimistic locking / conflict resolution
     version: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
 
+    # Guest token for SMS link (REQ-MENU-005, AC-MENU-001)
+    guest_token: Mapped[str | None] = mapped_column(
+        String(64), unique=True, nullable=True, index=True
+    )
+    token_expires_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
     # Relationships
     guest: Mapped["Guest"] = relationship("Guest", back_populates="waitlist_entries")
     notifications: Mapped[list["Notification"]] = relationship(
         "Notification", back_populates="waitlist_entry"
+    )
+    guest_interests: Mapped[list["GuestInterest"]] = relationship(
+        "GuestInterest", back_populates="waitlist_entry"
     )
 
     def __init__(
@@ -95,6 +111,32 @@ class WaitlistEntry(Base):
     def source_enum(self) -> EntrySource:
         """Get source as enum."""
         return EntrySource(self.source)
+
+    def generate_guest_token(self, expiry_hours: int = DEFAULT_TOKEN_EXPIRY_HOURS) -> str:
+        """Generate a secure guest token for SMS link.
+
+        REQ-MENU-005: Guest receives SMS with a link
+        AC-MENU-001: Guest accesses menu from SMS link
+
+        Args:
+            expiry_hours: Hours until token expires (default 24)
+
+        Returns:
+            Generated token string
+        """
+        self.guest_token = secrets.token_urlsafe(32)
+        self.token_expires_at = datetime.utcnow() + timedelta(hours=expiry_hours)
+        return self.guest_token
+
+    def is_token_valid(self) -> bool:
+        """Check if the guest token is valid and not expired.
+
+        Returns:
+            True if token exists and is not expired
+        """
+        if not self.guest_token or not self.token_expires_at:
+            return False
+        return datetime.utcnow() < self.token_expires_at
 
     def __repr__(self) -> str:
         return f"<WaitlistEntry(id={self.id}, status={self.status}, party_size={self.party_size})>"

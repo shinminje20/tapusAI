@@ -5,11 +5,19 @@ REQ-WL-002: Real-time queue display
 REQ-WL-003: Estimated wait time
 REQ-WL-004: Reorder, prioritize, mark VIP
 REQ-WL-005: Status tracking
+REQ-MENU-004: Full service "likely to order" view
 """
 
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.v1.deps import get_waitlist_service
+from app.api.v1.schemas.guest import (
+    GuestInterestsSummaryResponse,
+    PreorderSummary,
+)
 from app.api.v1.schemas.waitlist import (
     GuestCreate,
     WaitlistEntryResponse,
@@ -22,6 +30,8 @@ from app.domain.exceptions import (
     InvalidStatusTransitionError,
 )
 from app.domain.services import WaitlistService
+from app.infrastructure.database import get_db
+from app.infrastructure.repositories.guest_interest_repository import GuestInterestRepository
 
 router = APIRouter(prefix="/waitlist", tags=["waitlist"])
 
@@ -249,3 +259,59 @@ async def get_eta(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Waitlist entry {entry_id} not found",
         )
+
+
+@router.get(
+    "/{entry_id}/interests",
+    response_model=GuestInterestsSummaryResponse,
+    summary="Get guest interests summary",
+    description="REQ-MENU-004: Admin sees 'Likely to order' summary. AC-MENU-004: Visible on waitlist item.",
+)
+async def get_guest_interests(
+    entry_id: int,
+    session: Annotated[AsyncSession, Depends(get_db)],
+    service: WaitlistService = Depends(get_waitlist_service),
+) -> GuestInterestsSummaryResponse:
+    """Get guest interests (starred items and pre-orders) for admin view.
+
+    REQ-MENU-004: Full-service "likely to order" visibility
+    AC-MENU-004: Admin sees summary on waitlist item
+    """
+    # Verify entry exists
+    try:
+        entry = await service.get_entry_by_id(entry_id)
+    except EntryNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Waitlist entry {entry_id} not found",
+        )
+
+    repo = GuestInterestRepository(session)
+    interests = await repo.get_interests_for_entry(entry_id, include_items=True)
+
+    # Separate starred and preorder items
+    starred_items = [i for i in interests if i.is_starred and not i.is_preorder]
+    preorder_items = [i for i in interests if i.is_preorder]
+
+    # Build summary
+    preorder_summary = [
+        PreorderSummary(
+            item_name=i.menu_item.name if i.menu_item else "Unknown Item",
+            quantity=i.quantity,
+        )
+        for i in preorder_items
+    ]
+
+    starred_names = [
+        i.menu_item.name if i.menu_item else "Unknown Item"
+        for i in starred_items
+    ]
+
+    return GuestInterestsSummaryResponse(
+        entry_id=entry_id,
+        guest_name=entry.guest.name if entry.guest else "Guest",
+        starred_count=len(starred_items),
+        preorder_count=len(preorder_items),
+        preorder_summary=preorder_summary,
+        starred_items=starred_names,
+    )

@@ -8,7 +8,16 @@ from app.api.v1 import router as api_v1_router
 from app.core.config import get_settings
 from app.infrastructure.database import engine, Base
 # Import entities so Base.metadata knows about them
-from app.domain.entities import Guest, Notification, WaitlistEntry, Table, User  # noqa: F401
+from app.domain.entities import (  # noqa: F401
+    Guest,
+    GuestInterest,
+    MenuCategory,
+    MenuItem,
+    Notification,
+    Table,
+    User,
+    WaitlistEntry,
+)
 
 
 @asynccontextmanager

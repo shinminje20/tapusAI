@@ -213,3 +213,20 @@ class WaitlistService:
             List of waiting entries ordered by position
         """
         return await self._waitlist_repo.get_all_waiting()
+
+    async def get_entry_by_id(self, entry_id: int) -> WaitlistEntry:
+        """Get a specific waitlist entry by ID.
+
+        Args:
+            entry_id: Entry ID to retrieve
+
+        Returns:
+            WaitlistEntry
+
+        Raises:
+            EntryNotFoundError: If entry doesn't exist
+        """
+        entry = await self._waitlist_repo.get_by_id(entry_id)
+        if entry is None:
+            raise EntryNotFoundError(entry_id)
+        return entry
