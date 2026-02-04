@@ -1,10 +1,11 @@
 # Task State
 
 **Last Updated:** 02/04/2026
-**Session:** Phase 4 Menu & Pre-Order - IN PROGRESS
+**Session:** Phase 4 Menu & Pre-Order - **COMPLETE**
 
 ## Current Focus
-Implementing Phase 4: Menu Browsing & Soft Pre-Order.
+Phase 4 Complete! MVP ready for deployment.
+All requirements through Phase 4 implemented.
 See detailed plan: `logs/plan/phase-4-menu-preorder.md`
 
 ---
@@ -22,10 +23,10 @@ See detailed plan: `logs/plan/phase-4-menu-preorder.md`
 - [x] Task 4B.1: Guest Web App Setup (React + Vite) - **COMPLETE**
 - [x] Task 4B.2: Menu Browsing UI [REQ-MENU-001] - **COMPLETE** (included in 4B.1)
 - [x] Task 4B.3: Star Functionality [AC-MENU-002] - **COMPLETE** (included in 4B.1)
-- [ ] Task 4B.4: Soft Pre-Order Flow [AC-MENU-003]
+- [x] Task 4B.4: Soft Pre-Order Flow [AC-MENU-003] - **COMPLETE**
 
 ### Phase 4C: Admin Integration
-- [ ] Task 4C.2: "Likely to Order" Display [AC-MENU-004]
+- [x] Task 4C.2: "Likely to Order" Display [AC-MENU-004] - **COMPLETE**
 
 ---
 
@@ -45,15 +46,33 @@ apps/guest-web/
     ├── hooks/useGuestData.ts ✅ React Query hooks
     ├── pages/
     │   ├── index.ts          ✅ Page exports
-    │   ├── GuestPage.tsx     ✅ Main guest page with menu
+    │   ├── GuestPage.tsx     ✅ Main guest page with menu + pre-order
     │   └── NotFoundPage.tsx  ✅ Error/invalid token page
     └── components/
         ├── index.ts          ✅ Component exports
         ├── GuestHeader.tsx   ✅ Waitlist status header
-        ├── MenuSection.tsx   ✅ Category section
-        ├── MenuItemCard.tsx  ✅ Item card with star
+        ├── MenuSection.tsx   ✅ Category section (updated for pre-order)
+        ├── MenuItemCard.tsx  ✅ Item card with star + pre-order
+        ├── PreorderCart.tsx  ✅ Pre-order cart with quantity controls
+        ├── QuantitySelector.tsx ✅ Quantity +/- selector
+        ├── Toast.tsx         ✅ Toast notifications
         ├── LoadingScreen.tsx ✅ Loading state
         └── ErrorScreen.tsx   ✅ Error state
+```
+
+## Phase 4C Files Created
+
+```
+apps/admin/src/features/waitlist/components/
+└── GuestInterestsBadge.tsx   ✅ "Likely to Order" badge + modal
+
+apps/admin/src/services/
+├── api.ts                    ✅ Updated: GuestInterests tag
+└── waitlistApi.ts            ✅ Updated: getGuestInterests endpoint
+
+backend/app/
+├── api/v1/endpoints/waitlist.py ✅ Updated: GET /{id}/interests
+└── domain/services/waitlist_service.py ✅ Updated: get_entry_by_id
 ```
 
 ---
@@ -161,3 +180,26 @@ backend/tests/unit/
 - 02/04/2026: Phase 3 complete (107 tests), committed
 - 02/04/2026: Phase 4A complete (127 tests), 4B.1 in progress
 - 02/04/2026: Phase 4B.1-4B.3 complete (Guest Web App with menu browsing + star)
+- 02/04/2026: **Phase 4 Complete** (4B.4 Pre-Order + 4C.2 "Likely to Order"), committed
+
+**Git Commit:** `de5610a` - Phase 4 Complete
+
+---
+
+## MVP Summary
+
+All MVP requirements implemented:
+
+| Phase | Feature | Status |
+|-------|---------|--------|
+| 1 | Backend Core (Waitlist API) | ✅ Complete |
+| 2 | Kiosk App (Guest Check-In) | ✅ Complete |
+| 3 | Admin App + SMS Notifications | ✅ Complete |
+| 4 | Menu Browsing + Pre-Order | ✅ Complete |
+
+**Total Tests:** 127 backend tests passing
+
+**Next Steps (Post-MVP):**
+- Phase 5: Analytics & Integration (deferred - not MVP)
+- Deployment to staging/production
+- User testing and feedback
